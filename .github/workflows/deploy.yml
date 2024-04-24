@@ -1,0 +1,51 @@
+name: Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main
+env:
+  AZURE_RESOURCE_GROUP: 'appcatdl'
+  AZURE_FUNCTIONAPP_NAME: 'appcatdl'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'shipper'
+  DOTNET_VERSION: '8.0.x'
+  DEPLOYMENT_FILE: 'infra/deploy.bicep'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@v3
+
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Azure CLI script
+      uses: azure/cli@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az deployment group create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --template-file ${{ env.DEPLOYMENT_FILE }}
+
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: 'Resolve Project Dependencies Using Dotnet'
+      shell: bash
+      run: |
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+        dotnet build --configuration Release --output ./output
+        popd
+
+    - name: 'Run Azure Functions Action'
+      uses: Azure/functions-action@v1
+      with:
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
