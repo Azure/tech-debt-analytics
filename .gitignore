@@ -271,3 +271,6 @@ __pycache__/
 
 # vscode
 .vscode/
+
+# power bi
+*/.pbi/*
