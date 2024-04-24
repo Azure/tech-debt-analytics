@@ -11,6 +11,10 @@ env:
   DOTNET_VERSION: '8.0.x'
   DEPLOYMENT_FILE: 'infra/deploy.bicep'
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
