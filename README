@@ -1,6 +1,7 @@
-# Project Name
+# Tech debt analytics at scale
 
 ## Description
+Using our first party Azure Migration Application Assessment tooling, we want to allow you to build a continuous improvement and visibility approach to technical debt. By putting the assessment on the CI/CD and posting the results to a central location you can get an instant report at the repository level and then see results at the whole app estate level. This will allow you to see trends and make decisions on where to focus your improvement efforts.
 
 This project consists of three main components: `infra/`, `shipper/`, and `report/`. Each component serves a specific functionality and requires different deployment and running instructions.
 
