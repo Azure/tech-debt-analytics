@@ -264,7 +264,7 @@ __pycache__/
 *.pyc
 
 # mono
-mono/
+.mono/
 
 # azurite
 *__azurite__*
