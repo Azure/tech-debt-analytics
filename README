@@ -1,6 +1,7 @@
 # Tech debt analytics at scale
 
 ## Description
+
 Using our first party Azure Migration Application Assessment tooling, we want to allow you to build a continuous improvement and visibility approach to technical debt. By putting the assessment on the CI/CD and posting the results to a central location you can get an instant report at the repository level and then see results at the whole app estate level. This will allow you to see trends and make decisions on where to focus your improvement efforts.
 
 This project consists of three main components: `infra/`, `shipper/`, and `report/`. Each component serves a specific functionality and requires different deployment and running instructions.
@@ -33,6 +34,12 @@ The `report/` directory contains a Power BI report that provides insights and an
 5. Share the report with the intended audience.
 
 
-## License
+## Legal Notices
 
-This project is licensed under the [MIT License](LICENSE).
+### License
+
+This project is licensed under the [MIT License](./LICENSE).
+
+### Trademarks
+
+This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow Microsoft’s Trademark & Brand Guidelines. Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party’s policies.
