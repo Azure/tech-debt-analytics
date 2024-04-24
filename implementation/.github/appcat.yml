@@ -35,10 +35,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+      uses: actions/checkout@v2
+
+      - name: Set report contents as environment variable
+      id: set-report-contents
+      run: |
+        echo "::set-env name=REPORT_CONTENTS::$(cat appcat-results/report.json)"
 
       - name: Send report
-        run: |
-          curl -X PUT "https://<your-function-app>.azurewebsites.net/api/<your-function-endpoint>?org=${{ github.repository_owner }}&repo=${{ github.repository }}&branch=${{ github.ref_name }}&pr=${{ github.event.pull_request.number }}&commit=${{ github.sha }}&committer=${{ github.actor }}" \
-               -H "Content-Type: application/json" \
-               --data @report.json
+      run: |
+        curl -X PUT "https://<your-function-app>.azurewebsites.net/api/<your-function-endpoint>?org=${{ github.repository_owner }}&repo=${{ github.repository }}&branch=${{ github.ref_name }}&pr=${{ github.event.pull_request.number }}&commit=${{ github.sha }}&committer=${{ github.actor }}" \
+        -H "Content-Type: application/json" \
+        --data-binary "${{ env.REPORT_CONTENTS }}"
