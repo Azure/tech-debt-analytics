@@ -267,8 +267,8 @@ __pycache__/
 .mono/
 
 # azurite
-shipper/__azurite_db_blob__.json
-shipper/__azurite_db_blob_extent__.json
+**/__azurite_db_blob__.json
+**/__azurite_db_blob_extent__.json
 
 # vscode
 .vscode/
