@@ -267,10 +267,10 @@ __pycache__/
 .mono/
 
 # azurite
-*__azurite__*
+**__azurite__*
 
 # vscode
 .vscode/
 
 # power bi
-*/.pbi/*
+**/.pbi/*
