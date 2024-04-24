@@ -267,10 +267,12 @@ __pycache__/
 .mono/
 
 # azurite
-**/__azurite__*
+shipper/__azurite_db_blob__.json
+shipper/__azurite_db_blob_extent__.json
 
 # vscode
 .vscode/
 
 # power bi
 **/.pbi/
+
