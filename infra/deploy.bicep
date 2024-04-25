@@ -8,7 +8,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   location: location
   sku: {
     name: 'Standard_LRS'
-    tier: 'Standard'
   }
   kind: 'StorageV2'
   properties: {
@@ -71,7 +70,7 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
   }
 }
 
-resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(storageAccount.id, 'Storage Blob Data Contributor')
   scope: storageAccount
   properties: {
@@ -80,26 +79,77 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-prev
   }
 }
 
-resource appRegistration 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  name: 'appcat-cicd-results-submission'
-  properties: {
-    displayName: 'appcat ci/cd results submission'
-  }
+resource userManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
+  name: 'github-appcatdl-shipper'
+  location: location
+}
+
+resource identityCredential 'Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials@2023-07-31-preview' = {
+  parent: userManagedIdentity
+  name: 'github-appcatdl-shipper-cred'
 }
 
 resource authSettingsV2 'Microsoft.Web/sites/config@2021-02-01' = {
-  name: '${functionApp.name}/authsettingsv2'
+  name: 'authsettingsV2'
   parent: functionApp
   properties: {
-    enabled: true
-    unauthenticatedClientAction: 'RedirectToLoginPage'
-    tokenStoreEnabled: true
-    allowedAudiences: [
-      appRegistration.id
-    ]
+    platform: {
+      enabled: true
+      runtimeVersion: '~1'
+    }
+    globalValidation: {
+      requireAuthentication:  true
+      unauthenticatedClientAction: 'RedirectToLoginPage'
+      redirectToProvider: 'azureactivedirectory'
+    }
+    identityProviders: {
+      azureActiveDirectory: {
+        enabled: true
+        registration: {
+          openIdIssuer: 'https://sts.windows.net/${subscription().tenantId}/v2.0'
+          clientId: userManagedIdentity.properties.clientId
+          clientSecretSettingName: 'MICROSOFT_PROVIDER_AUTHENTICATION_SECRET'
+        }
+        login: {
+          disableWWWAuthenticate: false
+        }
+        validation: {
+          jwtClaimChecks: {}
+          allowedAudiences: [
+            'api://${userManagedIdentity.properties.clientId}'
+          ]
+          defaultAuthorizationPolicy: {
+            allowedPrincipals: {}
+          }
+        }
+      }
+    }
+    login: {
+      routes: {}
+      tokenStore: {
+        enabled: true
+        tokenRefreshExtensionHours: json('72.0')
+        fileSystem: {}
+        azureBlobStorage: {}
+      }
+      preserveUrlFragmentsForLogins: false
+      cookieExpiration: {
+        convention: 'FixedTime'
+        timeToExpiration: '08:00:00'
+      }
+      nonce: {
+        validateNonce: true
+        nonceExpirationInterval: '00:05:00'
+      }
+    }
+    httpSettings: {
+      requireHttps: true
+      routes: {
+        apiPrefix: '/.auth'
+      }
+      forwardProxy: {
+        convention: 'NoProxy'
+      }
+    }
   }
 }
-
-output appRegistrationClientId string = appRegistration.properties.clientId
-output subscriptionId string = subscription().subscriptionId
-output tenantId string = subscription().tenantId
