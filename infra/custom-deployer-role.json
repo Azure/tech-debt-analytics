@@ -16,7 +16,10 @@
                     "Microsoft.Web/sites/Write",
                     "Microsoft.Web/sites/config/Write",
                     "Microsoft.ManagedIdentity/userAssignedIdentities/write",
-                    "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials/write"
+                    "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials/write",
+                    "Microsoft.Authorization/roleAssignments/write",
+                    "Microsoft.ManagedIdentity/userAssignedIdentities/read",
+                    "Microsoft.Web/sites/Read"
                 ],
                 "notActions": [],
                 "dataActions": [],
