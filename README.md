@@ -1,18 +1,22 @@
 # Tech debt analytics at scale
 
-## Description
+## Goal
 
 Using our first party Azure Migration Application Assessment tooling, we want to allow you to build a continuous improvement and visibility approach to technical debt. By putting the assessment on the CI/CD and posting the results to a central location you can get an instant report at the repository level and then see results at the whole app estate level. This will allow you to see trends and make decisions on where to focus your improvement efforts.
 
+## Repo moving parts
+
 This project consists of three main components: `infra/`, `shipper/`, and `report/`. Each component serves a specific functionality and requires different deployment and running instructions.
+
+- `infra/`: Contains the infrastructure code for deploying the project.
+- `shipper/`: Contains an Azure Function that CI/CD processes can submit modernisation json files to
+- `report/`: Contains a Power BI report that provides insights and analytics over submitted modernisation reports
 
 ### infra/
 
-The `infra/` directory contains the infrastructure code for deploying the project. It includes configuration files, scripts, and templates for provisioning the necessary resources on the cloud platform. To deploy the infrastructure, follow these steps:
+The `infra/` directory contains the infrastructure code for deploying the project. It includes configuration files, scripts, and templates for provisioning the necessary resources on the cloud platform. You can use the Github workflow with a provisioned OIDC connection to deploy to Azure or you can use the Az CLI to deploy the bicep.
 
-1. Install the required dependencies (e.g., Terraform, Azure CLI).
-2. Navigate to the `infra/` directory.
-3. Run the deployment script or execute the Terraform commands to provision the infrastructure.
+![The resources created](infra/bicep-visualiser.png)
 
 ### shipper/
 
@@ -25,7 +29,7 @@ The `shipper/` directory contains an Azure Function that handles shipping operat
 
 ### report/
 
-The `report/` directory contains a Power BI report that provides insights and analytics. To deploy the Power BI report, follow these steps:
+The `report/` directory contains a Power BI report project. The goal of this is to provide a starter report that allows you to understand modernisation needs and change velocity.
 
 1. Sign in to the Power BI service.
 2. Create a new workspace or select an existing one.
