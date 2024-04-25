@@ -3,6 +3,7 @@ param storageAccountName string = 'appcatstorage'
 param functionAppName string = 'appcatfunction'
 param functionAppPlanName string = 'appcatfunctionplan'
 
+// Data lake for appcat results
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: storageAccountName
   location: location
@@ -26,6 +27,7 @@ resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@20
   name: 'appcat'
 }
 
+// Azure Function to support appcat results shipment to the data lake
 resource functionAppPlan 'Microsoft.Web/serverfarms@2023-01-01' = {
   name: functionAppPlanName
   location: location
@@ -70,6 +72,7 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
   }
 }
 
+// Allow the data lake to be written to by the function app
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(storageAccount.id, 'Storage Blob Data Contributor')
   scope: storageAccount
@@ -79,16 +82,27 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   }
 }
 
+// Support authenticated access to the function app from Github Actions only
+// This could be replaced with key based auth if needed
 resource userManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
   name: 'github-appcatdl-shipper'
   location: location
 }
 
+      // This demonstrates the use of a federated identity credential in IaC but a credential will be needed for each app
+      // This is because the subject is specific to the repo
 resource identityCredential 'Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials@2023-07-31-preview' = {
   parent: userManagedIdentity
   name: 'github-appcatdl-shipper-cred'
+  properties: {
+    issuer: 'https://token.actions.githubusercontent.com'
+    audiences: ['api://AzureADTokenExchange']
+    subject: 'repo:stephlocke/tech-debt-analytics:ref:refs/heads/main'
+  }
 }
 
+// Adds the authentication settings to the function app
+// Restricts to only federated identieis associated with the user managed identity
 resource authSettingsV2 'Microsoft.Web/sites/config@2021-02-01' = {
   name: 'authsettingsV2'
   parent: functionApp
