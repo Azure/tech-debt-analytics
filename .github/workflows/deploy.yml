@@ -6,7 +6,7 @@ on:
       - main
 env:
   AZURE_RESOURCE_GROUP: 'appcatdl'
-  AZURE_FUNCTIONAPP_NAME: 'appcatdl'
+  AZURE_FUNCTIONAPP_NAME: 'appcatfunction'
   AZURE_FUNCTIONAPP_PACKAGE_PATH: 'shipper'
   DOTNET_VERSION: '8.0.x'
   DEPLOYMENT_FILE: 'infra/deploy.bicep'
