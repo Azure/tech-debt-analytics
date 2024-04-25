@@ -1,13 +1,23 @@
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
-var host = new HostBuilder()
-    .ConfigureFunctionsWebApplication()
-    .ConfigureServices(services => {
-        services.AddApplicationInsightsTelemetryWorkerService();
-        services.ConfigureFunctionsApplicationInsights();
-    })
-    .Build();
+namespace shipper
+{
+    class Program
+    {
+        static async Task Main(string[] args)
+        {
+            var host = new HostBuilder()
+                .ConfigureFunctionsWorkerDefaults()
+                .ConfigureServices(services =>
+                {
 
-host.Run();
+                })
+                .Build();
+
+            await host.RunAsync();
+        }
+    }
+}

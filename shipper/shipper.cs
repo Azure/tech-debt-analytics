@@ -1,38 +1,31 @@
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using System.Web;
+using System.Threading.Tasks;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace appcatdl
 {
-    public class shipper
+    public static class Shipper
     {
-        private readonly ILogger<shipper> _logger;
-
-        public shipper(ILogger<shipper> logger)
-        {
-            _logger = logger;
-        }
 
         [Function("shipper")]
         [BlobOutput("appcat/{org}/{repo}/{branch}/{pr}/{commit}/{committer}/{DateTime.Now:yyyyMMddHHmmss}.json", Connection = "AzureWebJobsStorage")]
-        public async Task<string> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "put")] HttpRequestData req,
-            FunctionContext context)
+        public static async Task<string> Ship([HttpTrigger(AuthorizationLevel.Anonymous, "put")] HttpRequest req,
+            ILogger log)
         {
-            var org = req.Url.Query["org"] ?? "00";
-            var repo = req.Url.Query["repo"] ?? "00";
-            var branch = req.Url.Query["branch"] ?? "00";
-            var pr = req.Url.Query["pr"] ?? "00";
-            var commit = req.Url.Query["commit"] ?? "00";
-            var committer = req.Url.Query["committer"] ?? "00";
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            var query = HttpUtility.ParseQueryString(req.QueryString.Value);
+            var org = query["org"] ?? "00";
+            var repo = query["repo"] ?? "00";
+            var branch = query["branch"] ?? "00";
+            var pr = query["pr"] ?? "00";
+            var commit = query["commit"] ?? "00";
+            var committer = query["committer"] ?? "00";
 
-            string requestBody;
-            using (StreamReader reader = new StreamReader(req.Body))
-            {
-                requestBody = await reader.ReadToEndAsync();
-            }
-
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation("C# HTTP trigger function processed a request.");
 
             return requestBody;
         }
