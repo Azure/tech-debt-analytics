@@ -19,10 +19,7 @@
                     "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials/write",
                     "Microsoft.Authorization/roleAssignments/write",
                     "Microsoft.ManagedIdentity/userAssignedIdentities/read",
-                    "Microsoft.Web/sites/Read",
-                    "Microsoft.Web/sites/basicPublishingCredentialsPolicies/Read",
-                    "Microsoft.Web/sites/publishxml/Action",
-                    "Microsoft.Web/sites/config/list/Action"
+                    "Microsoft.Web/sites/*"
                 ],
                 "notActions": [],
                 "dataActions": [],
