@@ -36,18 +36,21 @@ resource functionAppPlan 'Microsoft.Web/serverfarms@2023-01-01' = {
     tier: 'Dynamic'
   }
   properties: {
-    reserved: false
+    reserved: true
   }
 }
+
 
 resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
   name: functionAppName
   location: location
-  kind: 'functionapp'
+  kind: 'functionapp,linux'
   identity: {
     type: 'SystemAssigned'
   }
   properties: {
+    reserved: true
+    httpsOnly: true
     serverFarmId: functionAppPlan.id
     siteConfig: {
       appSettings: [
@@ -64,8 +67,8 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
           value: '1'
         }
         {
-          name: 'AzureWebJobsStorage'
-          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=core.windows.net'
+          name: 'AzureWebJobsStorage__accountName'
+          value: storageAccountName
         }
       ]
     }
