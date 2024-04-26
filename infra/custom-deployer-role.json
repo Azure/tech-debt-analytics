@@ -19,7 +19,9 @@
                     "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials/write",
                     "Microsoft.Authorization/roleAssignments/write",
                     "Microsoft.ManagedIdentity/userAssignedIdentities/read",
-                    "Microsoft.Web/sites/*"
+                    "Microsoft.Web/sites/*",
+                    "Microsoft.Storage/storageAccounts/read",
+                    "Microsoft.Storage/storageAccounts/listKeys/action"
                 ],
                 "notActions": [],
                 "dataActions": [],

@@ -56,6 +56,12 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
     serverFarmId: functionAppPlan.id
     siteConfig: {
       linuxFxVersion: 'DOTNET-ISOLATED|8.0'
+      cors: {
+        allowedOrigins: [
+          'https://github.com'
+        ]
+        supportCredentials: false
+      }
       appSettings: [
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
@@ -117,39 +123,30 @@ resource identityCredential 'Microsoft.ManagedIdentity/userAssignedIdentities/fe
 
 // Adds the authentication settings to the function app
 // Restricts to only federated identieis associated with the user managed identity
-resource authSettingsV2 'Microsoft.Web/sites/config@2021-02-01' = {
+resource authSettingsV2 'Microsoft.Web/sites/config@2023-01-01' = {
   name: 'authsettingsV2'
   parent: functionApp
   properties: {
-    platform: {
-      enabled: true
-      runtimeVersion: '~1'
-    }
     globalValidation: {
       requireAuthentication:  true
-      unauthenticatedClientAction: 'RedirectToLoginPage'
-      redirectToProvider: 'azureactivedirectory'
+      unauthenticatedClientAction: 'Return401'
     }
     identityProviders: {
       azureActiveDirectory: {
         enabled: true
         registration: {
-          openIdIssuer: 'https://sts.windows.net/${subscription().tenantId}/v2.0'
+          openIdIssuer: 'https://login.microsoftonline.com/v2.0/${subscription().tenantId}/'
           clientId: userManagedIdentity.properties.clientId
-          clientSecretSettingName: 'MICROSOFT_PROVIDER_AUTHENTICATION_SECRET'
         }
-        login: {
-          disableWWWAuthenticate: false
-        }
-        validation: {
-          jwtClaimChecks: {}
-          allowedAudiences: [
-            'api://${userManagedIdentity.properties.clientId}'
-          ]
-          defaultAuthorizationPolicy: {
-            allowedPrincipals: {}
-          }
-        }
+        // validation: {
+        //   jwtClaimChecks: {}
+        //   allowedAudiences: [
+        //     'api://${userManagedIdentity.properties.clientId}'
+        //   ]
+        //   defaultAuthorizationPolicy: {
+        //     allowedPrincipals: {}
+        //   }
+        // }
       }
     }
     login: {
