@@ -14,6 +14,8 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   properties: {
     isHnsEnabled: true
     accessTier: 'Hot'
+    supportsHttpsTrafficOnly: true
+    defaultToOAuthAuthentication: true
   }
 }
 
@@ -53,6 +55,7 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
     httpsOnly: true
     serverFarmId: functionAppPlan.id
     siteConfig: {
+      linuxFxVersion: 'DOTNET-ISOLATED|8.0'
       appSettings: [
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
@@ -69,6 +72,14 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
         {
           name: 'AzureWebJobsStorage__accountName'
           value: storageAccountName
+        }
+        {
+          name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
+          value: storageAccount.properties.primaryEndpoints.file
+        }
+        {
+          name: 'WEBSITE_CONTENTSHARE'
+          value: functionAppName
         }
       ]
     }
