@@ -4,6 +4,7 @@ param functionAppName string = 'appcatfunction'
 param functionAppPlanName string = 'appcatfunctionplan'
 @secure()
 param shipperClientID string = newGuid()
+
 // Data lake for appcat results
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: storageAccountName
@@ -126,8 +127,6 @@ resource authSettingsV2 'Microsoft.Web/sites/config@2023-01-01' = {
         validation: {
           jwtClaimChecks: {}
           allowedAudiences: [
-            'api://${userManagedIdentity.properties.clientId}'
-            userManagedIdentity.properties.clientId
           ]
           defaultAuthorizationPolicy: {
             allowedPrincipals: {}
