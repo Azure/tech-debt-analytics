@@ -34,7 +34,9 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az deployment group create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --template-file ${{ env.DEPLOYMENT_FILE }}
+          az deployment group create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+          --template-file ${{ env.DEPLOYMENT_FILE }} \
+          --parameters shipperClientID=${{ secrets.SHIPPER_CLIENT_ID }}
 
     - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
       uses: actions/setup-dotnet@v3
