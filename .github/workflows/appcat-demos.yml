@@ -14,7 +14,7 @@ env:
   FUNCTION_APP_VERB: 'PUT'
 # This is the target and destination for modernisation
   TARGET: 'AppService.Linux'
-  DOTNET_APP_PATH: 'implementation/azure-search-openai-demo-csharp/app'
+  DOTNET_APP_PATH: './implementation/azure-search-openai-demo-csharp/app'
   REPORT_FOLDER: 'appcat-results/reports'
 
 
@@ -36,7 +36,7 @@ jobs:
       run: dotnet tool install -g dotnet-appcat
     - name: Run appcat JSON
       # This creates the payload for the datalake to give overall visibility of the modernisation effort
-      run: appcat analyze ${{ env.DOTNET_APP_PATHAPP_PATH }} --source folder --report ${{ env.REPORT_FOLDER }} --serializer json --non-interactive --code --binaries --target ${{ env.TARGET}}
+      run: appcat analyze ${{ env.DOTNET_APP_PATH }} --source folder --report ${{ env.REPORT_FOLDER }} --serializer json --non-interactive --code --binaries --target ${{ env.TARGET}}
     - name: Run appcat HTML
       # This creates a downloadable html report for this repo for the user to view
       run: appcat analyze ${{ env.DOTNET_APP_PATH }} --source folder --report ${{ env.REPORT_FOLDER }}/html --serializer html --non-interactive --code --binaries --target ${{ env.TARGET}}
