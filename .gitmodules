@@ -1,0 +1,6 @@
+[submodule "implementation/azure-search-openai-demo-csharp"]
+	path = implementation/azure-search-openai-demo-csharp
+	url = https://github.com/Azure-Samples/azure-search-openai-demo-csharp
+[submodule "implementation/azure-search-openai-demo-java"]
+	path = implementation/azure-search-openai-demo-java
+	url = https://github.com/Azure-Samples/azure-search-openai-demo-java
