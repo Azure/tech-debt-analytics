@@ -26,7 +26,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        submodules: true
+        submodules: 'recursive'
     # The analysis version used doesn't matter afaik so you can always use the latest versions to support analysis
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
