@@ -16,6 +16,7 @@ env:
   TARGET: 'AppService.Linux'
   DOTNET_APP_PATH: './implementation/azure-search-openai-demo-csharp/app'
   REPORT_FOLDER: 'appcat-results/reports'
+  REPORT_JSON_FILENAME: 'reports.appcat.json'
 
 
 jobs:
@@ -48,4 +49,4 @@ jobs:
       run: |
         curl -X ${{ env.FUNCTION_APP_VERB }} "https://${{ env.FUNCTION_APP_NAME }}.azurewebsites.net/api/${{ env.FUNCTION_NAME }}?org=${{ github.repository_owner }}&repo=${{ github.repository }}&branch=${{ github.ref_name }}&pr=${{ github.event.pull_request.number }}&commit=${{ github.sha }}&committer=${{ github.actor }}" \
         -H "Content-Type: application/json" \
-        --data "$(cat ${{ env.REPORT_FOLDER }}/report.json)"
+        --data "$(cat ${{ env.REPORT_FOLDER }}/${{ env.REPORT_JSON_FILENAME }})"
