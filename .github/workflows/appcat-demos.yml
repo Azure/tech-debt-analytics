@@ -33,7 +33,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Install appcat
-      run: dotnet tool install -g dotnet-appcat
+      run: dotnet tool install -g dotnet-appcat --version 0.1.97
     - name: Run appcat JSON
       # This creates the payload for the datalake to give overall visibility of the modernisation effort
       run: appcat analyze ${{ env.DOTNET_APP_PATH }} --source folder --report ${{ env.REPORT_FOLDER }} --serializer json --non-interactive --code --binaries --target ${{ env.TARGET}}
