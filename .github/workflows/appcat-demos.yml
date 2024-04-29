@@ -9,7 +9,7 @@ env:
 # This prevents first startup interactive expectations generating errors for the app cat CLI👇
   DOTNET_APPCAT_SKIP_FIRST_TIME_EXPERIENCE: true
 # This is the name of the function app that will receive the report 👇
-  FUNCTION_APP_NAME: 'appcatdl'
+  FUNCTION_APP_NAME: 'appcatfunction'
   FUNCTION_NAME: 'shipper'
   FUNCTION_APP_VERB: 'PUT'
 # This is the target and destination for modernisation
