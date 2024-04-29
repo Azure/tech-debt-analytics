@@ -2,6 +2,7 @@ param location string = resourceGroup().location
 param storageAccountName string = 'appcatstorage'
 param functionAppName string = 'appcatfunction'
 param functionAppPlanName string = 'appcatfunctionplan'
+// This is an app registration is needed to be made prior to deployment that will allow only authenticated processes from github.com to call the azure function
 @secure()
 param shipperClientID string = newGuid()
 
