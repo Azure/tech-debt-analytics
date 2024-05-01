@@ -33,7 +33,8 @@ jobs:
     - name: Azure login
       uses: azure/login@v2
       with:
-        client-id: ${{ secrets.SHIPPER_CLIENT_ID }} // This is an app registration ID associated with the shipper function.
+        # This is an app registration client ID associated with the shipper function.
+        client-id: ${{ secrets.SHIPPER_CLIENT_ID }} 
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     # The analysis version used doesn't matter afaik so you can always use the latest versions to support analysis
