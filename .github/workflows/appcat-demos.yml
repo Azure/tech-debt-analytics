@@ -36,7 +36,7 @@ jobs:
         # This is an app registration client ID associated with the shipper function.
         client-id: ${{ secrets.SHIPPER_CLIENT_ID }} 
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        allow-no-subscriptions: true
     # The analysis version used doesn't matter afaik so you can always use the latest versions to support analysis
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
