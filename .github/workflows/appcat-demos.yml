@@ -56,11 +56,11 @@ jobs:
         path: appcat-results/
     - name: Send report
       run: |
-          access_token=$(az account get-access-token --query accessToken -o tsv)
-          repo_name=$(echo "${{ github.repository }}" | sed 's/\//%2F/g')
-          shipper_url="https://${{ env.FUNCTION_APP_NAME }}.azurewebsites.net/api/${{ env.FUNCTION_NAME }}?org=${{ github.repository_owner }}&repo=$repo_name&branch=${{ github.ref_name }}&pr=${{ github.event.pull_request.number }}&commit=${{ github.sha }}&committer=${{ github.actor }}"
-          curl -X -v \
-          -H "Content-Type: application/json" \
-          -H "Authorization: Bearer $access_token" \
-          --data @${{ env.REPORT_JSON_FILENAME }} \
-          ${{ env.FUNCTION_APP_VERB }} $shipper_url
+        access_token=$(az account get-access-token --query accessToken -o tsv)
+        repo_name=$(echo "${{ github.repository }}" | sed 's/\//%2F/g')
+        shipper_url="https://${{ env.FUNCTION_APP_NAME }}.azurewebsites.net/api/${{ env.FUNCTION_NAME }}?org=${{ github.repository_owner }}&repo=${repo_name}&branch=${{ github.ref_name }}&pr=${{ github.event.pull_request.number }}&commit=${{ github.sha }}&committer=${{ github.actor }}"
+        curl -X -v \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer $access_token" \
+        --data @${{ env.REPORT_JSON_FILENAME }} \
+        ${{ env.FUNCTION_APP_VERB }} $shipper_url
