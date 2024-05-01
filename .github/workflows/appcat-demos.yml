@@ -54,14 +54,15 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         path: appcat-results/
-    - name: Set environment variable
-      run: echo "REPOSITORY=$(echo "${{ github.repository }}" | sed 's/\//%2F/g')" >> $GITHUB_ENV
+    - name: Set environment variables
+      run: |
+        echo "REPOSITORY=$(echo "${{ github.repository }}" | sed 's/\//%2F/g')" >> $GITHUB_ENV
+        echo "SHIPPER_URL=https://${{ env.FUNCTION_APP_NAME }}.azurewebsites.net/api/${{ env.FUNCTION_NAME }}?org=${{ github.repository_owner }}&repo=${{ env.REPOSITORY }}&branch=${{ github.ref_name }}&pr=${{ github.event.pull_request.number }}&commit=${{ github.sha }}&committer=${{ github.actor }}" >> $GITHUB_ENV
+        echo "ACCESS_TOKEN=$(az account get-access-token --query accessToken -o tsv)" >> $GITHUB_ENV
     - name: Send report
       run: |
-        access_token=$(az account get-access-token --query accessToken -o tsv)
-        shipper_url="https://${{ env.FUNCTION_APP_NAME }}.azurewebsites.net/api/${{ env.FUNCTION_NAME }}?org=${{ github.repository_owner }}&repo=${{ env.REPOSITORY }}&branch=${{ github.ref_name }}&pr=${{ github.event.pull_request.number }}&commit=${{ github.sha }}&committer=${{ github.actor }}"
         curl -X -v \
         -H "Content-Type: application/json" \
-        -H "Authorization: Bearer $access_token" \
+        -H "Authorization: Bearer ${{ env.ACCESS_TOKEN }}" \
         --data @${{ env.REPORT_JSON_FILENAME }} \
-        ${{ env.FUNCTION_APP_VERB }} $shipper_url
+        ${{ env.FUNCTION_APP_VERB }} ${{ env.SHIPPER_URL }}
