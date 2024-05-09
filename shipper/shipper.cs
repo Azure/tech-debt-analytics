@@ -9,21 +9,27 @@ namespace appcatdl
 {
     public static class Shipper
     {
+        static string GetValueFromQuery(System.Collections.Specialized.NameValueCollection query, string key, string defaultValue)
+        {
+            string value = query[key];
+            return !string.IsNullOrEmpty(value) ? value : defaultValue;
+        }
+
         [Function("shipper")]
         [BlobOutput("appcat/{org}/{repo}/{branch}/{pr}/{commit}/{committer}/{DateTime.Now:yyyyMMddHHmmss}.json", Connection = "AzureWebJobsStorage")]
         public static async Task<string> Ship([HttpTrigger(AuthorizationLevel.Anonymous, "put")] HttpRequestData req,
-            ILogger log,
             FunctionContext executionContext)
         {
+            ILogger log = executionContext.GetLogger("Shipper");
             string requestBody = await req.ReadAsStringAsync();
-            var query = HttpUtility.ParseQueryString(req.Url.Query);
-            var org = query["org"] ?? "00";
-            var repo = query["repo"] ?? "00";
-            var branch = query["branch"] ?? "00";
-            var pr = query["pr"] ?? "00";
-            var commit = query["commit"] ?? "00";
-            var committer = query["committer"] ?? "00";
-
+            System.Collections.Specialized.NameValueCollection query = HttpUtility.ParseQueryString(req.Url.Query);
+            string org = GetValueFromQuery(query, "org", "00");
+            string repo = GetValueFromQuery(query, "repo", "00");
+            string branch = GetValueFromQuery(query, "branch", "00");
+            string pr = GetValueFromQuery(query, "pr", "00");
+            string commit = GetValueFromQuery(query, "commit", "00");
+            string committer = GetValueFromQuery(query, "committer", "00");
+         
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             return requestBody;

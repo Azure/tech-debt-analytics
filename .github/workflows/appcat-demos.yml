@@ -65,7 +65,7 @@ jobs:
         -H "Content-Type: application/json" \
         -H "Authorization: Bearer ${{ env.ACCESS_TOKEN }}" \
         --data @${{ env.REPORT_JSON_FILENAME }} \
-        ${{ env.SHIPPER_URL }})
+        "${{ env.SHIPPER_URL }})"
         # status_code=$(echo "$response" | grep -oP "(?<=< HTTP/1.1 )[^ ]+")
         # echo "Status code: $status_code"
         echo "Response: $response"
