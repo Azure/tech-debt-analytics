@@ -136,7 +136,7 @@ resource authSettingsV2 'Microsoft.Web/sites/config@2023-01-01' = {
       azureActiveDirectory: {
         enabled: true
         registration: {
-          openIdIssuer: 'https://login.microsoftonline.com/v2.0/${subscription().tenantId}/'
+          openIdIssuer: '${environment().authentication.loginEndpoint}${subscription().tenantId}/v2.0'
           clientId: shipperClientID
         }
         validation: {
