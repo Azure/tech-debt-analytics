@@ -2,6 +2,7 @@ param location string = resourceGroup().location
 param storageAccountName string = 'appcatstorage'
 param functionAppName string = 'appcatfunction'
 param functionAppPlanName string = 'appcatfunctionplan'
+param appInsightsName string = 'appcatinsights'
 // This is an app registration is needed to be made prior to deployment that will allow only authenticated processes from github.com to call the azure function
 @secure()
 param shipperClientID string = newGuid()
@@ -30,6 +31,15 @@ resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01'
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
   parent: blobService
   name: 'appcat'
+}
+
+resource appInsights 'Microsoft.Insights/components@2020-02-02-preview' = {
+  name: appInsightsName
+  location: location
+  kind: 'web'
+  properties: {
+    Application_Type: 'web'
+  }
 }
 
 // Azure Function to support appcat results shipment to the data lake
@@ -89,6 +99,10 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
         {
           name: 'WEBSITE_CONTENTSHARE'
           value: functionAppName
+        }
+        {
+          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          value: appInsights.properties.InstrumentationKey
         }
       ]
     }
