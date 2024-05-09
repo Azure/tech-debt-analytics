@@ -16,7 +16,7 @@ namespace appcatdl
         }
 
         [Function("shipper")]
-        [BlobOutput("appcat/{org}/{repo}/{branch}/{pr}/{commit}/{committer}/{DateTime.Now:yyyyMMddHHmmss}.json", Connection = "AzureWebJobsStorage")]
+        [BlobOutput("appcat/org={org}/repo={repo}/branch={branch}/pr={pr}/commit={commit}/committer={committer}/{DateTime.Now:yyyyMMddHHmmss}.json", Connection = "AzureWebJobsStorage")]
         public static async Task<string> Ship([HttpTrigger(AuthorizationLevel.Anonymous, "put")] HttpRequestData req,
             FunctionContext executionContext)
         {
