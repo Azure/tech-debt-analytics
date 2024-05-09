@@ -1,5 +1,4 @@
 {
-    "id": "/subscriptions/<subID>/providers/Microsoft.Authorization/roleDefinitions/5f295437-b85e-4493-8303-77e633cd53d7",
     "properties": {
         "roleName": "appcatdl deployer",
         "description": "Minimal permissions needed for deploying resources associated with https://github.com/stephlocke/tech-debt-analytics",
@@ -15,13 +14,13 @@
                     "Microsoft.Web/serverfarms/Write",
                     "Microsoft.Web/sites/Write",
                     "Microsoft.Web/sites/config/Write",
-                    "Microsoft.ManagedIdentity/userAssignedIdentities/write",
-                    "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials/write",
                     "Microsoft.Authorization/roleAssignments/write",
-                    "Microsoft.ManagedIdentity/userAssignedIdentities/read",
                     "Microsoft.Web/sites/*",
+                    "Microsoft.Storage/storageAccounts/listkeys/action",
                     "Microsoft.Storage/storageAccounts/read",
-                    "Microsoft.Storage/storageAccounts/listKeys/action"
+                    "Microsoft.Insights/Components/Write",
+                    "Microsoft.Insights/Components/Read",
+                    "Microsoft.Insights/Components/Annotations/Write"
                 ],
                 "notActions": [],
                 "dataActions": [],

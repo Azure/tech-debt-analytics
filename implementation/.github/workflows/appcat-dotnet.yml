@@ -1,0 +1,73 @@
+name: assess modernisation effort - dotnet
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  # workflow_run:
+  #   workflows: ["Deploy to Azure"]
+  #   types:
+  #     - completed
+
+permissions:
+      id-token: write
+      contents: read
+env:
+# This prevents first startup interactive expectations generating errors for the app cat CLI👇
+  DOTNET_APPCAT_SKIP_FIRST_TIME_EXPERIENCE: true
+# This is the name of the function app that will receive the report 👇
+  FUNCTION_APP_NAME: 'appcatfunction'
+  FUNCTION_NAME: 'shipper'
+  FUNCTION_APP_VERB: 'PUT'
+# This is the target and destination for modernisation
+  TARGET: 'AppService.Linux'
+  DOTNET_APP_PATH: '../azure-search-openai-demo-csharp/app'
+  REPORT_FOLDER: 'appcat-results/reports'
+  REPORT_JSON_FILENAME: 'appcat-results/reports.json'
+
+jobs:
+  assess_modernisation_effort:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: 'recursive'
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        # This is an app registration client ID associated with the shipper function.
+        client-id: ${{ secrets.SHIPPER_CLIENT_ID }} 
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        allow-no-subscriptions: true
+    # The analysis version used doesn't matter afaik so you can always use the latest versions to support analysis
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Install appcat
+      run: dotnet tool install -g dotnet-appcat --version 0.1.107
+    - name: Run appcat JSON
+      # This creates the payload for the datalake to give overall visibility of the modernisation effort
+      run: appcat analyze ${{ env.DOTNET_APP_PATH }} --source folder --report ${{ env.REPORT_FOLDER }} --serializer json --non-interactive --code --binaries --target ${{ env.TARGET}}
+    - name: Run appcat HTML
+      # This creates a downloadable html report for this repo for the user to view
+      run: appcat analyze ${{ env.DOTNET_APP_PATH }} --source folder --report ${{ env.REPORT_FOLDER }}/html --serializer html --non-interactive --code --binaries --target ${{ env.TARGET}}
+    - name: Upload results
+      uses: actions/upload-artifact@v4
+      with:
+        path: appcat-results/
+    - name: Set environment variables
+      run: |
+        echo "REPOSITORY=$(echo "${{ github.repository }}" | sed 's/\//%2F/g')" >> $GITHUB_ENV
+        echo "${{ github.repository }} : ${{ env.REPOSITORY }}"
+        echo "SHIPPER_URL=https://${{ env.FUNCTION_APP_NAME }}.azurewebsites.net/${{ env.FUNCTION_NAME }}?org=${{ github.repository_owner }}&repo=${{ env.REPOSITORY }}&branch=${{ github.ref_name }}&pr=${{ github.event.pull_request.number }}&commit=${{ github.sha }}&committer=${{ github.actor }}" >> $GITHUB_ENV
+        echo "ACCESS_TOKEN=$(az account get-access-token --query accessToken --resource  ${{ secrets.SHIPPER_CLIENT_ID }} -o tsv)" >> $GITHUB_ENV
+    - name: Send report
+      run: |
+        curl -X ${{ env.FUNCTION_APP_VERB }} \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer ${{ env.ACCESS_TOKEN }}" \
+        --data @${{ env.REPORT_JSON_FILENAME }} \
+        "${{ env.SHIPPER_URL }}"
