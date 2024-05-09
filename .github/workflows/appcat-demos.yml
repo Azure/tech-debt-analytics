@@ -61,8 +61,11 @@ jobs:
         echo "ACCESS_TOKEN=$(az account get-access-token --query accessToken -o tsv)" >> $GITHUB_ENV
     - name: Send report
       run: |
-        curl -X ${{ env.FUNCTION_APP_VERB }} -v \
+        response=$(curl -X ${{ env.FUNCTION_APP_VERB }} -v \
         -H "Content-Type: application/json" \
         -H "Authorization: Bearer ${{ env.ACCESS_TOKEN }}" \
         --data @${{ env.REPORT_JSON_FILENAME }} \
-        ${{ env.SHIPPER_URL }}
+        ${{ env.SHIPPER_URL }})
+        status_code=$(echo "$response" | grep -oP "(?<=< HTTP/1.1 )[^ ]+")
+        echo "Status code: $status_code"
+        echo "Response: $response"
