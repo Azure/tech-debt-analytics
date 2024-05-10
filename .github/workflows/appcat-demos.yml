@@ -60,9 +60,8 @@ jobs:
         path: appcat-results/
     - name: Set environment variables
       run: |
-        echo "REPOSITORY=$(echo "${{ github.repository }}" | cut -d'/' -f2-)" >> $GITHUB_ENV
-        echo "${{ github.repository }} : ${{ env.REPOSITORY }}"
-        echo "SHIPPER_URL=https://${{ env.FUNCTION_APP_NAME }}.azurewebsites.net/${{ env.FUNCTION_NAME }}?org=${{ github.repository_owner }}&repo=${{ env.REPOSITORY }}&branch=${{ github.ref_name }}&pr=${{ github.event.pull_request.number }}&commit=${{ github.sha }}&committer=${{ github.actor }}" >> $GITHUB_ENV
+        echo "${{ github.repository }} : $(echo "${{ github.repository }}" | cut -d'/' -f2-)"
+        echo "SHIPPER_URL=https://${{ env.FUNCTION_APP_NAME }}.azurewebsites.net/${{ env.FUNCTION_NAME }}?org=${{ github.repository_owner }}&repo=$(echo "${{ github.repository }}" | cut -d'/' -f2-)&branch=${{ github.ref_name }}&pr=${{ github.event.pull_request.number }}&commit=${{ github.sha }}&committer=${{ github.actor }}" >> $GITHUB_ENV
         echo "ACCESS_TOKEN=$(az account get-access-token --query accessToken --resource  ${{ secrets.SHIPPER_CLIENT_ID }} -o tsv)" >> $GITHUB_ENV
     - name: Send report
       run: |
