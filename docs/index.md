@@ -2,6 +2,12 @@
 
 Application modernisation isn't a one-time event. It's a continuous process that requires visibility and tracking. This project aims to provide you with functionality to allow you to understand the modernisation needs and velocity of your organisation.
 
+This project consists of three main components:
+
+- Azure environment (`infra`): The infrastructure as code for the central framework that will ingest and host the modernisation reports
+- Shipper API (`shipper`): An Azure Function that CI/CD processes can submit modernisation json files to
+- Tech Debt Analytics Dashboard (`report`): A Power BI report that provides insights and analytics over submitted modernisation reports
+
 ## Goal
 
 Using our first party Azure Migration Application Assessment tooling, we want to allow you to build a continuous improvement and visibility approach to technical debt. By putting the assessment at the point of commit and posting the results to a central location you can get an instant view at the repository level or organisation level about modernisation needs. This will allow you to see trends and make decisions on where to focus your improvement efforts.
@@ -14,13 +20,13 @@ Use this solution to:
 - Build a network map of which repositories are active and who is working on them
 - Give visibility into partner-led modernisation efforts
 
-## Detailed Docs
+## Learn more
 
 - [Getting started](docs/getting_started.md)
+- [Making your own adjustments to the shipper API locally](docs/developing_functions_locally.md)
 - [Architecture and design decisions (WIP)](docs/architecture.md)
 - [Security and authentication](docs/security_and_authentication.md)
 - [Application modernisation assessment tooling](docs/appcat.md)
-- [Developing functions locally](docs/developing_functions_locally.md)
 - [The application modernisation assessment tooling](docs/appcat.md)
 
 ## Getting started
@@ -32,7 +38,7 @@ Use this solution to:
 
 Read more in [Getting started](docs/getting_started.md)
 
-## How to implement modernisation analytics within your CI/CD process
+## Implement modernisation analytics within your CI/CD process
 
 We can run the Azure Migration and Modernisation tooling on the command line to get an understanding of what's needed in a number of ways including JSON for use later and even a HTML dashboard.
 
@@ -68,39 +74,6 @@ Finally, we can send the JSON to the shipper API to be stored in the central dat
     --data @${{ env.REPORT_JSON_FILENAME }} \
     "${{ env.SHIPPER_URL }}")
 ```
-
-## Key moving parts
-
-This project consists of three main components: `infra`, `shipper`, and `report`.
-
-- `infra/`: The infrastructure code for the central framework that will ingest and host the modernisation reports
-- `shipper/`: An Azure Function that CI/CD processes can submit modernisation json files to
-- `report/`: A Power BI report that provides insights and analytics over submitted modernisation reports
-
-Read [Architecture and design decisions](docs/architecture.md) to get the detail on how these components work together.
-
-### infra
-
-The `infra/` directory contains the infrastructure code for deploying the project. It includes configuration files, scripts, and templates for provisioning the necessary resources on the cloud platform.
-
-Key resources created are:
-
-- A storage account to store the modernisation reports
-- An Azure Function App to host the shipper API
-
-![The resources created](docs/bicep-visualiser.png)
-
-The deployment and the resources being deployed leverage [Azure User Managed Identities](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview) to ensure that the resources are deployed securely. You can use the Github workflow with a provisioned OIDC connection to deploy to Azure or you can use the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest) to deploy the bicep. To provision OIDC connections for GitHub Actions, you can follow the instructions provided in the [GitHub Actions documentation](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows).
-
-### shipper
-
-The `shipper/` directory contains an Azure Function that different CI/CD processes can submit their modernisation results to. Currently this will yield an API that will accept a PUT request with the modernisation results in the body and CI/CD metadata in the url parameters. The Azure Function will then store the results in an Azure Storage Account for the report to show the results of.
-
-More info on changing this Function at [Developing functions locally](docs/developing_functions_locally.md)
-
-### report
-
-The `report/` directory contains a [Power BI report project](https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-overview). The goal of this is to provide a starter report that allows you to understand modernisation needs and velocity. You are able to modify this report to meet your individual organisation's needs.
 
 ## Good security practices embedded in the project
 
