@@ -57,7 +57,7 @@ jobs:
     - name: Upload results
       uses: actions/upload-artifact@v4
       with:
-        path: appcat-results/
+        path: ${{ env.REPORT_FOLDER }}
     - name: Set environment variables
       run: |
         echo "${{ github.repository }} : $(echo "${{ github.repository }}" | cut -d'/' -f2-)"
