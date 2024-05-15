@@ -1,20 +1,20 @@
-# What security is used within this project?
+# Security and Authentication within the project
 
 ## Deploying resources to Azure via CI/CD
 
 To ensure the repository can securely deploy resources to Azure, the following steps are taken:
 
-- There is a [custom role](../infra/custom-deployer-role.json) in the subscription to allow deployment of the types of resources included in this solution.
-  - You could further provision the resource group first and associate the role only to that resource group to reduce the security perimeter of the role.
-- There is a [User Managed Identity](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/how-manage-user-assigned-managed-identities?pivots=identity-mi-methods-azcli) that is assigned to the custom role.
-- The respository has an associated [Federated Credential](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation) that is able to act as the User Managed Identity.
-- The repository uses GitHub Actions to deploy resources to Azure with an OIDC connection to Azure.
-
-The CI/CD then uses secrets to include key pieces of information to enable authentication:
-
-- `AZURE_CLIENT_ID`: The client ID of the User Managed Identity.
-- `AZURE_TENANT_ID`: The tenant ID that the User Managed Identity exists in.
-- `AZURE_SUBSCRIPTION_ID`: The subscription ID where the resources are to be deployed.
+- [Optional but highly recommended] Create a [custom role](../infra/custom-deployer-role.json) in the subscription to allow deployment of the types of resources included in this solution with the least amount of privileges.
+  - [Most recommended] You could provision the resource group first and associate the role only to that resource group to reduce the security perimeter of the role.
+  - [Not recommended] Alternatively, you can assign contributor access to the subscription to the User Managed Identity when you create it.
+- Create the [App Registration](#app-registration) that the Azure Functions will use to provide authentication.
+- Create a [User Managed Identity](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/how-manage-user-assigned-managed-identities?pivots=identity-mi-methods-azcli) and assigned it to the custom role.
+- Create an associated [Federated Credential](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation) for the User Managed Identity for the repository.
+- Add the User Managed Identity Client ID within the secrets for the repository.
+  - `AZURE_CLIENT_ID`: The client ID of the User Managed Identity.
+  - `AZURE_TENANT_ID`: The tenant ID that the User Managed Identity exists in.
+  - `AZURE_SUBSCRIPTION_ID`: The subscription ID where the resources are to be deployed.
+- Add a login step within the CI/CD using the secrets associated with the User Managed Identity and the subscription you wish to deploy into.
 
 ```yaml
 - name: Azure login
@@ -61,7 +61,7 @@ The Azure Function is secured in several ways:
 
 10. **App registration:** The solution is restricted to logins being submitted to a specific client ID.
 
-## Sending reports to the solution
+## How to securely work with the API
 
 To successfully call a function hosted in this Function App, you need the following:
 
@@ -105,4 +105,77 @@ You can then use the token in the Authorization header of the request.
     -H "Authorization: Bearer ${{ env.ACCESS_TOKEN }}" \
     --data @${{ env.REPORT_JSON_FILENAME }} \
     "${{ env.SHIPPER_URL }}")
+```
+
+## App registration
+
+The app registration is configured with the following settings:
+
+- **Supported account types:** Accounts in this organizational directory only.
+- **Allow public client flows:** No.
+
+An example manifest for the app registration:
+
+```json
+{
+ "id": "<guid>",
+ "acceptMappedClaims": null,
+ "accessTokenAcceptedVersion": null,
+ "addIns": [],
+ "allowPublicClient": null,
+ "appId": "<guid>",
+ "appRoles": [],
+ "oauth2AllowUrlPathMatching": false,
+ "createdDateTime": "2024-04-28T16:31:03Z",
+ "description": null,
+ "certification": null,
+ "disabledByMicrosoftStatus": null,
+ "groupMembershipClaims": null,
+ "identifierUris": [],
+ "informationalUrls": {
+  "termsOfService": null,
+  "support": null,
+  "privacy": null,
+  "marketing": null
+ },
+ "keyCredentials": [],
+ "knownClientApplications": [],
+ "logoUrl": null,
+ "logoutUrl": null,
+ "name": "Appcat DL Shipper",
+ "notes": null,
+ "oauth2AllowIdTokenImplicitFlow": false,
+ "oauth2AllowImplicitFlow": false,
+ "oauth2Permissions": [],
+ "oauth2RequirePostResponse": false,
+ "optionalClaims": null,
+ "orgRestrictions": [],
+ "parentalControlSettings": {
+  "countriesBlockedForMinors": [],
+  "legalAgeGroupRule": "Allow"
+ },
+ "passwordCredentials": [],
+ "preAuthorizedApplications": [],
+ "publisherDomain": "fdpo.onmicrosoft.com",
+ "replyUrlsWithType": [],
+ "requiredResourceAccess": [
+  {
+   "resourceAppId": "00000003-0000-0000-c000-000000000000",
+   "resourceAccess": [
+    {
+     "id": "<guid>",
+     "type": "Scope"
+    }
+   ]
+  }
+ ],
+ "samlMetadataUrl": null,
+ "signInUrl": null,
+ "signInAudience": "AzureADMyOrg",
+ "tags": [
+  "apiConsumer",
+  "backgroundProcess"
+ ],
+ "tokenEncryptionKeyId": null
+}
 ```
