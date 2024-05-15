@@ -14,10 +14,10 @@ Use this solution to:
 - Build a network map of which repositories are active and who is working on them
 - Give visibility into partner-led modernisation efforts
 
-## Detailed Docs (WIP)
+## Detailed Docs
 
 - [Getting started](docs/getting-started.md)
-- [Architecture and design decisions](docs/architecture.md)
+- [Architecture and design decisions (WIP)](docs/architecture.md)
 - [Security and authentication](docs/security_and_authentication.md)
 - [Application modernisation assessment tooling](docs/appcat.md)
 - [Developing functions locally](docs/developing_functions_locally.md)
@@ -25,9 +25,10 @@ Use this solution to:
 
 ## Getting started
 
-1. Deploy the infrastructure to host the modernisation reports
-2. Add your CI/CD pipeline to submit modernisation results to the shipper API
-3. Deploy and configure the Power BI report to see results from every repository with a modernisation CI/CD pipeline
+1. Create an app registration to use for the shipper API and a User Managed Identity for the infrastructure deployment
+2. Deploy the infrastructure to host the modernisation reports
+3. Add your CI/CD pipeline to submit modernisation results to the shipper API
+4. Deploy and configure the Power BI report to see results from every repository with a modernisation CI/CD pipeline
 
 Read more in [Getting started](docs/getting-started.md)
 

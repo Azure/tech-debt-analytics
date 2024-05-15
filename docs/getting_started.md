@@ -14,7 +14,7 @@ To ensure the repository can securely deploy resources to Azure, do the followin
 - Create the [App Registration](security_and_authentication.md#app-registration) that the Azure Functions will use to provide authentication.
 - Create a [User Managed Identity](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/how-manage-user-assigned-managed-identities?pivots=identity-mi-methods-azcli) and assigned it to the custom role.
 - Create an associated [Federated Credential](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation) for the User Managed Identity for the repository.
-- Add the User Managed Identity Client ID within the secrets for the repository.
+- Add the User Managed Identity Client ID within the [secrets for the repository](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
   - `AZURE_CLIENT_ID`: The client ID of the User Managed Identity.
   - `AZURE_TENANT_ID`: The tenant ID that the User Managed Identity exists in.
   - `AZURE_SUBSCRIPTION_ID`: The subscription ID where the resources are to be deployed.

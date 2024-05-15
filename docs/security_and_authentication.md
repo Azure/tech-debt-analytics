@@ -10,7 +10,7 @@ To ensure the repository can securely deploy resources to Azure, the following s
 - Create the [App Registration](#app-registration) that the Azure Functions will use to provide authentication.
 - Create a [User Managed Identity](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/how-manage-user-assigned-managed-identities?pivots=identity-mi-methods-azcli) and assigned it to the custom role.
 - Create an associated [Federated Credential](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation) for the User Managed Identity for the repository.
-- Add the User Managed Identity Client ID within the secrets for the repository.
+- Add the User Managed Identity Client ID within the [secrets for the repository](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
   - `AZURE_CLIENT_ID`: The client ID of the User Managed Identity.
   - `AZURE_TENANT_ID`: The tenant ID that the User Managed Identity exists in.
   - `AZURE_SUBSCRIPTION_ID`: The subscription ID where the resources are to be deployed.
@@ -73,7 +73,7 @@ To successfully call a function hosted in this Function App, you need the follow
 
 ### Steps to authenticate in a CI/CD process
 
-To support authentication by the pipeline, you need to get the app registration's client ID plus the tent ID and add them as secrets in the repository.
+To support authentication by the pipeline, you need to get the app registration's client ID plus the tenant ID and add them as [secrets in the repository](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
 
 Then, within the pipeline you will need to login to Entra as the pipeline. The `--allow-no-subscriptions` flag is used to allow the pipeline to login even if though it won't be connected to any subscriptions.
 
