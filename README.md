@@ -16,7 +16,7 @@ Use this solution to:
 
 ## Detailed Docs
 
-- [Getting started](docs/getting-started.md)
+- [Getting started](docs/getting_started.md)
 - [Architecture and design decisions (WIP)](docs/architecture.md)
 - [Security and authentication](docs/security_and_authentication.md)
 - [Application modernisation assessment tooling](docs/appcat.md)
@@ -30,7 +30,7 @@ Use this solution to:
 3. Add your CI/CD pipeline to submit modernisation results to the shipper API
 4. Deploy and configure the Power BI report to see results from every repository with a modernisation CI/CD pipeline
 
-Read more in [Getting started](docs/getting-started.md)
+Read more in [Getting started](docs/getting_started.md)
 
 ## How to implement modernisation analytics within your CI/CD process
 
