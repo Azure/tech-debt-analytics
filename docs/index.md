@@ -8,6 +8,8 @@ This project consists of three main components:
 - Shipper API (`shipper`): An Azure Function that CI/CD processes can submit modernisation json files to
 - Tech Debt Analytics Dashboard (`report`): A Power BI report that provides insights and analytics over submitted modernisation reports
 
+![Dashboard example](dashboard-example.png)
+
 ## Goal
 
 Using our first party Azure Migration Application Assessment tooling, we want to allow you to build a continuous improvement and visibility approach to technical debt. By putting the assessment at the point of commit and posting the results to a central location you can get an instant view at the repository level or organisation level about modernisation needs. This will allow you to see trends and make decisions on where to focus your improvement efforts.
@@ -22,12 +24,13 @@ Use this solution to:
 
 ## Learn more
 
-- [Getting started](docs/getting_started.md)
-- [Making your own adjustments to the shipper API locally](docs/developing_functions_locally.md)
-- [Architecture and design decisions (WIP)](docs/architecture.md)
-- [Security and authentication](docs/security_and_authentication.md)
-- [Application modernisation assessment tooling](docs/appcat.md)
-- [The application modernisation assessment tooling](docs/appcat.md)
+- [Getting started](getting_started.md)
+- [Tech debt analytics dashboard](dashboard.md)
+- [Making your own adjustments to the shipper API locally](developing_functions_locally.md)
+- [Architecture and design decisions (WIP)](architecture.md)
+- [Security and authentication](security_and_authentication.md)
+- [Application modernisation assessment tooling](appcat.md)
+- [The application modernisation assessment tooling](appcat.md)
 
 ## Getting started
 
@@ -36,7 +39,7 @@ Use this solution to:
 3. Add your CI/CD pipeline to submit modernisation results to the shipper API
 4. Deploy and configure the Power BI report to see results from every repository with a modernisation CI/CD pipeline
 
-Read more in [Getting started](docs/getting_started.md)
+Read more in [Getting started](getting_started.md)
 
 ## Implement modernisation analytics within your CI/CD process
 
@@ -84,13 +87,13 @@ This repository aims to follow the latest good practices for the Azure and Fabri
 - Identity-based authentication for CI/CD pipelines that will send data via the shipper API
 - Infrastructure as code for user managed identities
 
-More info at [Security and authentication](docs/security_and_authentication.md)
+More info at [Security and authentication](security_and_authentication.md)
 
 ## Legal Notices
 
 ### License
 
-This project is licensed under the [MIT License](./LICENSE).
+This project is licensed under the [MIT License](../LICENSE).
 
 ### Trademarks
 
@@ -98,4 +101,4 @@ This project may contain trademarks or logos for projects, products, or services
 
 ### Contributing
 
-Please read the [Contributing](./CONTRIBUTING.md) guide to understand how to contribute to this project.
+Please read the [Contributing](../CONTRIBUTING.md) guide to understand how to contribute to this project.

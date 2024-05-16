@@ -14,9 +14,12 @@ Use this solution to:
 - Build a network map of which repositories are active and who is working on them
 - Give visibility into partner-led modernisation efforts
 
+![Dashboard example](docs/dashboard-example.png)
+
 ## Detailed Docs
 
 - [Getting started](docs/getting_started.md)
+- [Tech debt analytics dashboard](docs/dashboard.md)
 - [Architecture and design decisions (WIP)](docs/architecture.md)
 - [Security and authentication](docs/security_and_authentication.md)
 - [Application modernisation assessment tooling](docs/appcat.md)
