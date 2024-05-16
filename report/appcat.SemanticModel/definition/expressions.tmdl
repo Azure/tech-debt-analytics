@@ -1,0 +1,133 @@
+expression 'Sample file' =
+		let
+		  Source = AzureStorage.Blobs("https://appcatstorage.blob.core.windows.net/"),
+		  #"Navigation 1" = Source{[Name = "appcat"]}[Data],
+		  #"Filtered rows" = Table.SelectRows(#"Navigation 1", each [Extension] = ".json"),
+		  #"Filtered hidden files" = Table.SelectRows(#"Filtered rows", each [Attributes]?[Hidden]? <> true),
+		  #"Split column by delimiter" = Table.SplitColumn(#"Filtered hidden files", "Name", Splitter.SplitTextByDelimiter("/"), {"Name.1", "Name.2", "Name.3", "Name.4", "Name.5", "Name.6", "Name.7"}),
+		  #"Renamed columns" = Table.RenameColumns(#"Split column by delimiter", {{"Name.1", "Org"}, {"Name.2", "Repo"}, {"Name.3", "Branch"}, {"Name.4", "PR"}, {"Name.5", "Commit"}, {"Name.6", "Committer"}, {"Name.7", "Date"}}),
+		  #"Replaced value" = Table.ReplaceValue(#"Renamed columns", "org=", "", Replacer.ReplaceText, {"Org"}),
+		  #"Replaced value 1" = Table.ReplaceValue(#"Replaced value", "repo=", "", Replacer.ReplaceText, {"Repo"}),
+		  #"Replaced value 2" = Table.ReplaceValue(#"Replaced value 1", "branch=", "", Replacer.ReplaceText, {"Branch"}),
+		  #"Replaced value 3" = Table.ReplaceValue(#"Replaced value 2", "pr=", "", Replacer.ReplaceText, {"PR"}),
+		  #"Replaced value 4" = Table.ReplaceValue(#"Replaced value 3", "commit=", "", Replacer.ReplaceText, {"Commit"}),
+		  #"Replaced value 5" = Table.ReplaceValue(#"Replaced value 4", "committer=", "", Replacer.ReplaceText, {"Committer"}),
+		  #"Replaced value 6" = Table.ReplaceValue(#"Replaced value 5", "Z.json", "", Replacer.ReplaceText, {"Date"}),
+		  #"Split column by delimiter 1" = Table.SplitColumn(#"Replaced value 6", "Date", Splitter.SplitTextByDelimiter("T"), {"Date.1", "Date.2"}),
+		  #"Changed column type" = Table.TransformColumnTypes(#"Split column by delimiter 1", {{"Date.1", type date}, {"Date.2", type text}}, "en-US"),
+		  #"Renamed columns 1" = Table.RenameColumns(#"Changed column type", {{"Date.1", "Assessment Date"}}),
+		  #"Replaced value 7" = Table.ReplaceValue(#"Renamed columns 1", "-", ":", Replacer.ReplaceText, {"Date.2"}),
+		  #"Changed column type 1" = Table.TransformColumnTypes(#"Replaced value 7", {{"Date.2", type time}}),
+		  #"Renamed columns 2" = Table.RenameColumns(#"Changed column type 1", {{"Date.2", "Assessment Time"}}),
+		  #"Removed columns" = Table.RemoveColumns(#"Renamed columns 2", {"Attributes", "Date created", "Date modified", "Date accessed"}),
+		  #"Drill down" = #"Removed columns"[Content],
+		  #"Converted to table" = Table.FromList(#"Drill down", Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+		  #"Filtered hidden files 1" = Table.SelectRows(#"Converted to table", each [Attributes]?[Hidden]? <> true),
+		  Navigation = #"Filtered hidden files 1"{0}[Column1]
+		in
+		  Navigation
+	lineageTag: 15720c93-151a-47d6-9d88-97e7f94f356f
+	queryGroup: 'Transform file from appcat\Helper queries'
+
+	annotation PBI_ResultType = Binary
+
+expression Parameter =
+		let
+		  Parameter = #"Sample file" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = type binary, BinaryIdentifier = #"Sample file"]
+		in
+		  Parameter
+	lineageTag: 64cb341c-d11e-4df2-b29f-916229d8bd7b
+	queryGroup: 'Transform file from appcat\Helper queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample file' =
+		let
+		  Source = Json.Document(Parameter),
+		  #"Converted to table" = Record.ToTable(Source),
+		  #"Pivoted column" = Table.Pivot(Table.TransformColumnTypes(#"Converted to table", {{"Name", type text}}), List.Distinct(Table.TransformColumnTypes(#"Converted to table", {{"Name", type text}})[Name]), "Name", "Value")
+		
+		
+		
+		in
+		  #"Pivoted column"
+	lineageTag: b59053db-359d-4870-b927-e777efb28c18
+	queryGroup: 'Transform file from appcat'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform file' =
+		let
+		    Source = (Parameter as binary) => let
+		  Source = Json.Document(Parameter),
+		  #"Converted to table" = Record.ToTable(Source),
+		  #"Pivoted column" = Table.Pivot(Table.TransformColumnTypes(#"Converted to table", {{"Name", type text}}), List.Distinct(Table.TransformColumnTypes(#"Converted to table", {{"Name", type text}})[Name]), "Name", "Value")
+		
+		
+		in
+		  #"Pivoted column"
+		in
+		    Source
+	lineageTag: 72c1206b-8b50-41f1-8cb2-148b793a7782
+	queryGroup: 'Transform file from appcat\Helper queries'
+
+	annotation PBI_ResultType = Function
+
+expression DynamicallyExpandRecordColumn =
+		// source of inspiration: https://bielite.com/blog/dynamically-expand-all-columns/
+		let
+		    DynamicallyExpandRecordColumn = (table as table, column) =>
+		        let
+		            originalColumnNames = Table.ColumnNames(table),
+		            expandedTable = Table.ExpandRecordColumn(
+		                table,
+		                column,
+		                Table.ColumnNames(
+		                    Table.FromRecords(
+		                        List.Select(
+		                            Table.Column(table, column),
+		                            each _ <> "" and _ <> null
+		                        )
+		                    )
+		                ),
+		                List.Transform(
+		                    Table.ColumnNames(
+		                        Table.FromRecords(
+		                            List.Select(
+		                                Table.Column(table, column),
+		                                each _ <> "" and _ <> null
+		                            )
+		                        )
+		                    ),
+		                    each column & "_" & _
+		                )
+		            )
+		        in
+		            expandedTable
+		in
+		    DynamicallyExpandRecordColumn
+	lineageTag: e31ac2fd-3716-4469-b4ad-59a28d1867eb
+
+	annotation PBI_ResultType = Function
+
+expression DynamicallyExpandAllRecordColumns =
+		let
+		        DynamicallyExpandAllRecordColumns = (table as table) =>
+		        let
+		            recordColumns = List.Select(
+		                Table.ColumnNames(table),
+		                each Value.Is(Table.Column(table, _), Value.Type(Table.FromRecords({})))
+		            ),
+		            expandedTable = List.Accumulate(
+		                recordColumns,
+		                table,
+		                (acc, col) => DynamicallyExpandRecordColumn(acc, col)
+		            )
+		        in
+		            expandedTable
+		in
+		    DynamicallyExpandAllRecordColumns
+	lineageTag: 588b2b47-4271-471a-be1e-77c6e78f3b1e
+
+	annotation PBI_ResultType = Function
+

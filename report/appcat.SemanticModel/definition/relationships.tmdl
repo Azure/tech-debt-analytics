@@ -1,0 +1,5 @@
+relationship 0702c12c-1728-4389-b8b3-5998a1473075
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'dotnet modernisation'.'Assessment Date'
+	toColumn: LocalDateTable_3dbf6775-7619-41e9-9ef7-87efd2cc93c1.Date
+

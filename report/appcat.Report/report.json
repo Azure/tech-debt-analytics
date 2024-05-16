@@ -1,5 +1,5 @@
 {
-  "config": "{\"version\":\"5.54\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU05\",\"version\":\"5.54\",\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "config": "{\"version\":\"5.54\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU05\",\"version\":\"5.54\",\"type\":2},\"customTheme\":{\"name\":\"Innovate\",\"version\":\"5.54\",\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":0,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
   "layoutOptimization": 0,
   "resourcePackages": [
     {
@@ -10,6 +10,11 @@
             "name": "CY24SU05",
             "path": "BaseThemes/CY24SU05.json",
             "type": 202
+          },
+          {
+            "name": "Innovate",
+            "path": "BuiltInThemes/Innovate.json",
+            "type": 201
           }
         ],
         "name": "SharedResources",
@@ -20,13 +25,42 @@
   "sections": [
     {
       "config": "{}",
-      "displayName": "Page 1",
+      "displayName": "🏠 Home",
       "displayOption": 1,
       "filters": "[]",
       "height": 720.00,
       "name": "71bc6a11410ff0ea125a",
-      "visualContainers": [],
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"6e395575bd5664d231a5\",\"layouts\":[{\"id\":0,\"position\":{\"x\":176,\"y\":48,\"z\":2,\"width\":1104,\"height\":192,\"tabOrder\":2}}],\"singleVisual\":{\"visualType\":\"lineChart\",\"projections\":{\"Category\":[{\"queryRef\":\"dotnet modernisation.Assessment Date.Variation.Date Hierarchy.Year\",\"active\":true},{\"queryRef\":\"dotnet modernisation.Assessment Date.Variation.Date Hierarchy.Quarter\",\"active\":true},{\"queryRef\":\"dotnet modernisation.Assessment Date.Variation.Date Hierarchy.Month\",\"active\":true},{\"queryRef\":\"dotnet modernisation.Assessment Date.Variation.Date Hierarchy.Day\",\"active\":true}],\"Series\":[{\"queryRef\":\"dotnet modernisation.Repo\"}],\"Y\":[{\"queryRef\":\"CountNonNull(dotnet modernisation.analysisEndTime)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"dotnet modernisation\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Repo\"},\"Name\":\"dotnet modernisation.Repo\",\"NativeReferenceName\":\"Repo\"},{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"PropertyVariationSource\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Name\":\"Variation\",\"Property\":\"Assessment Date\"}},\"Hierarchy\":\"Date Hierarchy\"}},\"Level\":\"Year\"},\"Name\":\"dotnet modernisation.Assessment Date.Variation.Date Hierarchy.Year\",\"NativeReferenceName\":\"Assessment Date Year\"},{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"PropertyVariationSource\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Name\":\"Variation\",\"Property\":\"Assessment Date\"}},\"Hierarchy\":\"Date Hierarchy\"}},\"Level\":\"Quarter\"},\"Name\":\"dotnet modernisation.Assessment Date.Variation.Date Hierarchy.Quarter\",\"NativeReferenceName\":\"Assessment Date Quarter\"},{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"PropertyVariationSource\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Name\":\"Variation\",\"Property\":\"Assessment Date\"}},\"Hierarchy\":\"Date Hierarchy\"}},\"Level\":\"Month\"},\"Name\":\"dotnet modernisation.Assessment Date.Variation.Date Hierarchy.Month\",\"NativeReferenceName\":\"Assessment Date Month\"},{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"PropertyVariationSource\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Name\":\"Variation\",\"Property\":\"Assessment Date\"}},\"Hierarchy\":\"Date Hierarchy\"}},\"Level\":\"Day\"},\"Name\":\"dotnet modernisation.Assessment Date.Variation.Date Hierarchy.Day\",\"NativeReferenceName\":\"Assessment Date Day\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"analysisEndTime\"}},\"Function\":5},\"Name\":\"CountNonNull(dotnet modernisation.analysisEndTime)\",\"NativeReferenceName\":\"Count of analysisEndTime\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"categoryAxis\":[{\"properties\":{\"fontFamily\":{\"expr\":{\"Literal\":{\"Value\":\"'''Segoe UI Light'', wf_segoe-ui_light, helvetica, arial, sans-serif'\"}}},\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}],\"valueAxis\":[{\"properties\":{\"fontFamily\":{\"expr\":{\"Literal\":{\"Value\":\"'''Segoe UI Light'', wf_segoe-ui_light, helvetica, arial, sans-serif'\"}}},\"titleFontFamily\":{\"expr\":{\"Literal\":{\"Value\":\"'''Segoe UI Light'', wf_segoe-ui_light, helvetica, arial, sans-serif'\"}}},\"titleText\":{\"expr\":{\"Literal\":{\"Value\":\"'Assessments'\"}}}}}],\"legend\":[{\"properties\":{\"fontFamily\":{\"expr\":{\"Literal\":{\"Value\":\"'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'\"}}}}}]},\"vcObjects\":{\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Submitted assessments over time by repo'\"}}},\"fontFamily\":{\"expr\":{\"Literal\":{\"Value\":\"'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'\"}}},\"fontColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":0}}}}}}}],\"background\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}],\"padding\":[{\"properties\":{\"top\":{\"expr\":{\"Literal\":{\"Value\":\"5D\"}}},\"left\":{\"expr\":{\"Literal\":{\"Value\":\"10D\"}}},\"right\":{\"expr\":{\"Literal\":{\"Value\":\"10D\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 192.00,
+          "width": 1104.00,
+          "x": 176.00,
+          "y": 48.00,
+          "z": 2.00
+        },
+        {
+          "config": "{\"name\":\"7ae1c54a0058854c55ba\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":48,\"z\":1,\"width\":176,\"height\":672,\"tabOrder\":1}}],\"singleVisual\":{\"visualType\":\"textbox\",\"drillFilterOtherVisuals\":true,\"objects\":{\"general\":[{\"properties\":{\"paragraphs\":[{\"textRuns\":[{\"value\":\"Welcome to the tech debt analytics dashboard!\",\"textStyle\":{\"fontFamily\":\"Segoe UI\"}}]},{\"textRuns\":[{\"value\":\"\"}]},{\"textRuns\":[{\"value\":\"This dashboard is intended to consolidate tech debt / modernisation actions from across your software estate.\",\"textStyle\":{\"fontFamily\":\"Segoe UI\"}}]},{\"textRuns\":[{\"value\":\"\"}]},{\"textRuns\":[{\"value\":\"👷‍♀️ This report is just a starter to demonstrate the datasets and type of insights you could derive - please edit it to make it your own.\",\"textStyle\":{\"fontFamily\":\"Segoe UI\"}}]},{\"textRuns\":[{\"value\":\"\"}]},{\"textRuns\":[{\"value\":\"🆕 To add new applications to this dashboard, add the modernisation assessment capability to your CI/CD processes and send the results to the tech debt analytics data lake.\",\"textStyle\":{\"fontFamily\":\"Segoe UI\"}}]}]}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":6,\"Percent\":0}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"73D\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 672.00,
+          "width": 176.00,
+          "x": 0.00,
+          "y": 48.00,
+          "z": 1.00
+        },
+        {
+          "config": "{\"name\":\"fea42d4a87d002000e75\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":0,\"width\":1280,\"height\":48,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"shape\",\"drillFilterOtherVisuals\":true,\"objects\":{\"shape\":[{\"properties\":{\"tileShape\":{\"expr\":{\"Literal\":{\"Value\":\"'rectangle'\"}}}}}],\"rotation\":[{\"properties\":{\"shapeAngle\":{\"expr\":{\"Literal\":{\"Value\":\"0L\"}}}}}],\"fill\":[{\"properties\":{\"fillColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":6,\"Percent\":0}}}}}},\"selector\":{\"id\":\"default\"}}],\"text\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}},{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Tech Debt Analytics'\"}}},\"fontSize\":{\"expr\":{\"Literal\":{\"Value\":\"18D\"}}},\"fontFamily\":{\"expr\":{\"Literal\":{\"Value\":\"'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'\"}}},\"fontColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":0}}}}}},\"selector\":{\"id\":\"default\"}}],\"outline\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}},\"howCreated\":\"InsertVisualButton\"}",
+          "filters": "[]",
+          "height": 48.00,
+          "width": 1280.00,
+          "x": 0.00,
+          "y": 0.00,
+          "z": 0.00
+        }
+      ],
       "width": 1280.00
     }
-  ]
+  ],
+  "theme": "Innovate"
 }

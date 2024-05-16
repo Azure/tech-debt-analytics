@@ -1,0 +1,176 @@
+table 'dotnet modernisation'
+	lineageTag: 3a40666f-2f15-446a-8b97-f65a962711e0
+
+	column Org
+		dataType: string
+		lineageTag: 3619627b-7301-4432-becb-350a1f8e0337
+		summarizeBy: none
+		sourceColumn: Org
+
+		annotation SummarizationSetBy = Automatic
+
+	column Repo
+		dataType: string
+		lineageTag: 296ba59b-aa39-4091-b968-d1f1cb3c2332
+		summarizeBy: none
+		sourceColumn: Repo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Branch
+		dataType: string
+		lineageTag: 713fa27b-1f5c-4642-9e78-4944431b3d39
+		summarizeBy: none
+		sourceColumn: Branch
+
+		annotation SummarizationSetBy = Automatic
+
+	column PR
+		dataType: string
+		lineageTag: 81ecbd21-477c-444f-8d05-13a6786e3ced
+		summarizeBy: none
+		sourceColumn: PR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Commit
+		dataType: string
+		lineageTag: b725868c-3856-46fa-92a6-4de6016da654
+		summarizeBy: none
+		sourceColumn: Commit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Committer
+		dataType: string
+		lineageTag: 4c441bae-ef60-4afd-ae0b-7b52782bd67d
+		summarizeBy: none
+		sourceColumn: Committer
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Assessment Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 41088069-b468-484b-8c2b-b40eb509f8ab
+		summarizeBy: none
+		sourceColumn: Assessment Date
+
+		variation Variation
+			isDefault
+			relationship: 0702c12c-1728-4389-b8b3-5998a1473075
+			defaultHierarchy: LocalDateTable_3dbf6775-7619-41e9-9ef7-87efd2cc93c1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Assessment Time'
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 2e479461-c098-437f-ac32-eba2307e6fd4
+		summarizeBy: none
+		sourceColumn: Assessment Time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column Extension
+		dataType: string
+		lineageTag: b10711b7-6e8e-401a-b61f-c94e9c298509
+		summarizeBy: none
+		sourceColumn: Extension
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Folder Path'
+		dataType: string
+		lineageTag: 4a0b98a2-e5b2-45bf-9842-45c9d10642be
+		summarizeBy: none
+		sourceColumn: Folder Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column settings
+		dataType: string
+		lineageTag: 97c1252c-16a0-43dd-bbf1-1b4ddf6489a2
+		summarizeBy: none
+		sourceColumn: settings
+
+		annotation SummarizationSetBy = Automatic
+
+	column analysisStartTime
+		dataType: string
+		lineageTag: ae323169-91de-4675-91f5-e4bf23f7d586
+		summarizeBy: none
+		sourceColumn: analysisStartTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column analysisEndTime
+		dataType: string
+		lineageTag: 95636b09-df80-40c8-a17d-0528a209ce48
+		summarizeBy: none
+		sourceColumn: analysisEndTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats
+		dataType: string
+		lineageTag: 9dda32e2-217c-4e77-9bdc-ec24f0e7dac5
+		summarizeBy: none
+		sourceColumn: stats
+
+		annotation SummarizationSetBy = Automatic
+
+	column projects
+		dataType: string
+		lineageTag: a65bc234-f5ab-43c5-b64f-a906dd1bcae7
+		summarizeBy: none
+		sourceColumn: projects
+
+		annotation SummarizationSetBy = Automatic
+
+	column rules
+		dataType: string
+		lineageTag: 2f226300-0642-4313-a8d2-397414cbff86
+		summarizeBy: none
+		sourceColumn: rules
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'dotnet modernisation' = m
+		mode: import
+		source =
+				let
+				  Source = AzureStorage.Blobs("https://appcatstorage.blob.core.windows.net/"),
+				  #"Navigation 1" = Source{[Name = "appcat"]}[Data],
+				  #"Filtered rows" = Table.SelectRows(#"Navigation 1", each ([Extension] = ".json")),
+				  #"Filtered hidden files" = Table.SelectRows(#"Filtered rows", each [Attributes]?[Hidden]? <> true),
+				  #"Split column by delimiter" = Table.SplitColumn(#"Filtered hidden files", "Name", Splitter.SplitTextByDelimiter("/"), {"Name.1", "Name.2", "Name.3", "Name.4", "Name.5", "Name.6", "Name.7"}),
+				  #"Renamed columns" = Table.RenameColumns(#"Split column by delimiter", {{"Name.1", "Org"}, {"Name.2", "Repo"}, {"Name.3", "Branch"}, {"Name.4", "PR"}, {"Name.5", "Commit"}, {"Name.6", "Committer"}, {"Name.7", "Date"}}),
+				  #"Replaced value" = Table.ReplaceValue(#"Renamed columns", "org=", "", Replacer.ReplaceText, {"Org"}),
+				  #"Replaced value 1" = Table.ReplaceValue(#"Replaced value", "repo=", "", Replacer.ReplaceText, {"Repo"}),
+				  #"Replaced value 2" = Table.ReplaceValue(#"Replaced value 1", "branch=", "", Replacer.ReplaceText, {"Branch"}),
+				  #"Replaced value 3" = Table.ReplaceValue(#"Replaced value 2", "pr=", "", Replacer.ReplaceText, {"PR"}),
+				  #"Replaced value 4" = Table.ReplaceValue(#"Replaced value 3", "commit=", "", Replacer.ReplaceText, {"Commit"}),
+				  #"Replaced value 5" = Table.ReplaceValue(#"Replaced value 4", "committer=", "", Replacer.ReplaceText, {"Committer"}),
+				  #"Replaced value 6" = Table.ReplaceValue(#"Replaced value 5", "Z.json", "", Replacer.ReplaceText, {"Date"}),
+				  #"Split column by delimiter 1" = Table.SplitColumn(#"Replaced value 6", "Date", Splitter.SplitTextByDelimiter("T"), {"Date.1", "Date.2"}),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Split column by delimiter 1", {{"Date.1", type date}, {"Date.2", type text}}, "en-US"),
+				  #"Renamed columns 1" = Table.RenameColumns(#"Changed column type", {{"Date.1", "Assessment Date"}}),
+				  #"Replaced value 7" = Table.ReplaceValue(#"Renamed columns 1", "-", ":", Replacer.ReplaceText, {"Date.2"}),
+				  #"Changed column type 1" = Table.TransformColumnTypes(#"Replaced value 7", {{"Date.2", type time}}),
+				  #"Renamed columns 2" = Table.RenameColumns(#"Changed column type 1", {{"Date.2", "Assessment Time"}}),
+				  #"Removed columns" = Table.RemoveColumns(#"Renamed columns 2", {"Attributes", "Date created", "Date modified", "Date accessed"}),
+				  #"Filtered hidden files 1" = Table.SelectRows(#"Removed columns", each [Attributes]?[Hidden]? <> true),
+				  #"Invoke custom function" = Table.AddColumn(#"Filtered hidden files 1", "Transform file", each #"Transform file"([Content])),
+				 // #"Removed other columns" = Table.SelectColumns(#"Invoke custom function", {"Content"}),
+				  #"Expanded table column" = Table.ExpandTableColumn(#"Invoke custom function" , "Transform file", Table.ColumnNames(#"Transform file"(#"Sample file"))),
+				  #"Removed columns 1" = Table.RemoveColumns(#"Expanded table column", {"Content"})
+				in
+				  #"Removed columns 1"
+
+	annotation PBI_ResultType = Table
+
