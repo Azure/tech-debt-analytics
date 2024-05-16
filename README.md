@@ -14,7 +14,7 @@ Use this solution to:
 - Build a network map of which repositories are active and who is working on them
 - Give visibility into partner-led modernisation efforts
 
-![Dashboard example](docs/dashboard-example.png)
+![Dashboard example](docs/dashboard_example.png)
 
 ## Detailed Docs
 

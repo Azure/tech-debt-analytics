@@ -8,7 +8,7 @@ This project consists of three main components:
 - Shipper API (`shipper`): An Azure Function that CI/CD processes can submit modernisation json files to
 - Tech Debt Analytics Dashboard (`report`): A Power BI report that provides insights and analytics over submitted modernisation reports
 
-![Dashboard example](dashboard-example.png)
+![Dashboard example](dashboard_example.png)
 
 ## Goal
 

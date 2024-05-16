@@ -2,7 +2,7 @@
 
 This report is designed to provide insights and analytics over submitted modernisation reports. It is a Power BI report that can be deployed and configured to see results from every repository with a modernisation CI/CD pipeline. The report is designed to be used by developers, architects, and project managers to understand the modernisation effort across the organisation.
 
-![Dashboard example](dashboard-example.png)
+![Dashboard example](dashboard_example.png)
 
 ## Editing the report
 
