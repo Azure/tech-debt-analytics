@@ -45,12 +45,10 @@ expression 'Transform Sample file' =
 		let
 		  Source = Json.Document(Parameter),
 		  #"Converted to table" = Record.ToTable(Source),
-		  #"Pivoted column" = Table.Pivot(Table.TransformColumnTypes(#"Converted to table", {{"Name", type text}}), List.Distinct(Table.TransformColumnTypes(#"Converted to table", {{"Name", type text}})[Name]), "Name", "Value")
-		
-		
-		
+		  #"Pivoted column" = Table.Pivot(Table.TransformColumnTypes(#"Converted to table", {{"Name", type text}}), List.Distinct(Table.TransformColumnTypes(#"Converted to table", {{"Name", type text}})[Name]), "Name", "Value"),
+		  ExpandPass1 = RecursivelyDynamicallyExpandAllRecordColumns(#"Pivoted column",10)
 		in
-		  #"Pivoted column"
+		  ExpandPass1
 	lineageTag: b59053db-359d-4870-b927-e777efb28c18
 	queryGroup: 'Transform file from appcat'
 
@@ -61,11 +59,12 @@ expression 'Transform file' =
 		    Source = (Parameter as binary) => let
 		  Source = Json.Document(Parameter),
 		  #"Converted to table" = Record.ToTable(Source),
-		  #"Pivoted column" = Table.Pivot(Table.TransformColumnTypes(#"Converted to table", {{"Name", type text}}), List.Distinct(Table.TransformColumnTypes(#"Converted to table", {{"Name", type text}})[Name]), "Name", "Value")
+		  #"Pivoted column" = Table.Pivot(Table.TransformColumnTypes(#"Converted to table", {{"Name", type text}}), List.Distinct(Table.TransformColumnTypes(#"Converted to table", {{"Name", type text}})[Name]), "Name", "Value"),
+		  ExpandPass1 = RecursivelyDynamicallyExpandAllRecordColumns(#"Pivoted column",10)
 		
 		
 		in
-		  #"Pivoted column"
+		  ExpandPass1
 		in
 		    Source
 	lineageTag: 72c1206b-8b50-41f1-8cb2-148b793a7782
@@ -107,27 +106,59 @@ expression DynamicallyExpandRecordColumn =
 		in
 		    DynamicallyExpandRecordColumn
 	lineageTag: e31ac2fd-3716-4469-b4ad-59a28d1867eb
+	queryGroup: Functions
 
 	annotation PBI_ResultType = Function
 
-expression DynamicallyExpandAllRecordColumns =
+expression DynamicallyExpandAllRecordColumns = ```
 		let
 		        DynamicallyExpandAllRecordColumns = (table as table) =>
-		        let
-		            recordColumns = List.Select(
-		                Table.ColumnNames(table),
-		                each Value.Is(Table.Column(table, _), Value.Type(Table.FromRecords({})))
-		            ),
-		            expandedTable = List.Accumulate(
-		                recordColumns,
-		                table,
-		                (acc, col) => DynamicallyExpandRecordColumn(acc, col)
-		            )
-		        in
-		            expandedTable
+		    let
+		        // Get the names of all columns in the table
+		        columnNames = Table.ColumnNames(table),
+		        
+		        // Identify the columns that have record data type
+		        recordColumns = List.Select(columnNames, each List.AnyTrue(List.Transform(Table.Column(table, _), each Value.Is(_, Record.Type)))),
+		        
+		        // Apply DynamicallyExpandRecordColumn to all record columns
+		        expandedTable = List.Accumulate(recordColumns, table, (state, current) => DynamicallyExpandRecordColumn(state, current))
+		    in
+		        expandedTable
 		in
 		    DynamicallyExpandAllRecordColumns
+		```
 	lineageTag: 588b2b47-4271-471a-be1e-77c6e78f3b1e
+	queryGroup: Functions
+
+	annotation PBI_ResultType = Function
+
+expression RecursivelyDynamicallyExpandAllRecordColumns = ```
+		let
+		    RecursivelyDynamicallyExpandAllRecordColumns = (table as table, count as number) =>
+		    let
+		        // Initialize the result as the input table
+		        result = table,
+		        
+		        // Define a function to check if two tables have the same schema
+		        IsSameSchema = (table1 as table, table2 as table) => Table.Schema(table1) = Table.Schema(table2),
+		        
+		        // Loop for the specified count
+		        Loop = List.Generate(
+		            () => [i = 0, currentTable = result],
+		            each [i] < count and not IsSameSchema([currentTable], DynamicallyExpandAllRecordColumns([currentTable])),
+		            each [i = [i] + 1, currentTable = DynamicallyExpandAllRecordColumns([currentTable])],
+		            each [currentTable]
+		        ),
+		        
+		        // Get the last table from the loop
+		        finalTable = List.Last(Loop)
+		    in
+		        finalTable
+		in
+		    RecursivelyDynamicallyExpandAllRecordColumns
+		```
+	lineageTag: c0ace641-d8c8-4a94-a9c3-b5b5ef9bba84
+	queryGroup: Functions
 
 	annotation PBI_ResultType = Function
 

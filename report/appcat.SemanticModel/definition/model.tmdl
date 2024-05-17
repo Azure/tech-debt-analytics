@@ -14,17 +14,25 @@ queryGroup 'Transform file from appcat\Helper queries'
 
 	annotation PBI_QueryGroupOrder = 0
 
+/// Helper functions for making things easier!
+queryGroup Functions
+
+	annotation PBI_QueryGroupOrder = 2
+
 annotation PBI_ProTooling = ["DevMode"]
 
 annotation PBIDesktopVersion = 2.129.702.0 (24.05)
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["dotnet modernisation","Sample file","Parameter","Transform Sample file","Transform file","DynamicallyExpandRecordColumn","DynamicallyExpandAllRecordColumns"]
+annotation PBI_QueryOrder = ["dotnet modernisation","Sample file","Parameter","Transform Sample file","Transform file","DynamicallyExpandRecordColumn","DynamicallyExpandAllRecordColumns","RecursivelyDynamicallyExpandAllRecordColumns"]
 
 ref table DateTableTemplate_d3c00d00-4a2e-401b-86e1-3568d5516efb
 ref table 'dotnet modernisation'
 ref table LocalDateTable_3dbf6775-7619-41e9-9ef7-87efd2cc93c1
+ref table 'Latest dotnet modernisation results'
+ref table LocalDateTable_cdcabd17-b0ee-45dc-94bd-ff855296c4b5
+ref table LocalDateTable_7f94d400-0be3-4911-ac7d-245b022afea9
 
 ref cultureInfo en-GB
 

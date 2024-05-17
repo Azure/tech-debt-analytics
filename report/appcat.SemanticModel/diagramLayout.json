@@ -19,6 +19,18 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 284,
+            "y": 50
+          },
+          "nodeIndex": "Latest dotnet modernisation results",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "All tables",

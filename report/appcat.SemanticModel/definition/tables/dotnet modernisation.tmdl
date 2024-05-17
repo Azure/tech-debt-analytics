@@ -92,14 +92,6 @@ table 'dotnet modernisation'
 
 		annotation SummarizationSetBy = Automatic
 
-	column settings
-		dataType: string
-		lineageTag: 97c1252c-16a0-43dd-bbf1-1b4ddf6489a2
-		summarizeBy: none
-		sourceColumn: settings
-
-		annotation SummarizationSetBy = Automatic
-
 	column analysisStartTime
 		dataType: string
 		lineageTag: ae323169-91de-4675-91f5-e4bf23f7d586
@@ -116,14 +108,6 @@ table 'dotnet modernisation'
 
 		annotation SummarizationSetBy = Automatic
 
-	column stats
-		dataType: string
-		lineageTag: 9dda32e2-217c-4e77-9bdc-ec24f0e7dac5
-		summarizeBy: none
-		sourceColumn: stats
-
-		annotation SummarizationSetBy = Automatic
-
 	column projects
 		dataType: string
 		lineageTag: a65bc234-f5ab-43c5-b64f-a906dd1bcae7
@@ -132,11 +116,182 @@ table 'dotnet modernisation'
 
 		annotation SummarizationSetBy = Automatic
 
-	column rules
-		dataType: string
-		lineageTag: 2f226300-0642-4313-a8d2-397414cbff86
+	column settings_components_code
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 74fd6a36-f02c-4329-919d-1fc8b02d9c5d
 		summarizeBy: none
-		sourceColumn: rules
+		sourceColumn: settings_components_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column settings_components_binaries
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 96ca6c3e-1803-400e-a0d5-349f394ea5b7
+		summarizeBy: none
+		sourceColumn: settings_components_binaries
+
+		annotation SummarizationSetBy = Automatic
+
+	column settings_targetId
+		dataType: string
+		lineageTag: 22c076da-9462-41a0-8ffc-57fef4b36845
+		summarizeBy: none
+		sourceColumn: settings_targetId
+
+		annotation SummarizationSetBy = Automatic
+
+	column settings_targetDisplayName
+		dataType: string
+		lineageTag: 6dcf0daa-eb8a-4ca9-9d33-9bdaea73db63
+		summarizeBy: none
+		sourceColumn: settings_targetDisplayName
+
+		annotation SummarizationSetBy = Automatic
+
+	column settings_visuals_elements
+		dataType: string
+		lineageTag: 1c29c223-b7e8-4003-8f6f-20f8737b2729
+		summarizeBy: none
+		sourceColumn: settings_visuals_elements
+
+		annotation SummarizationSetBy = Automatic
+
+	column settings_visuals_pages_projects
+		dataType: string
+		lineageTag: 6820d21a-7776-4d31-bd9e-2eb4d9caa392
+		summarizeBy: none
+		sourceColumn: settings_visuals_pages_projects
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_summary_projects
+		dataType: int64
+		formatString: 0
+		lineageTag: cf0678e9-e2fa-4c0c-984a-58d0a7077898
+		summarizeBy: sum
+		sourceColumn: stats_summary_projects
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_summary_issues
+		dataType: int64
+		formatString: 0
+		lineageTag: d25d60ca-aa5f-4f79-965e-9774f8598566
+		summarizeBy: sum
+		sourceColumn: stats_summary_issues
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_summary_incidents
+		dataType: int64
+		formatString: 0
+		lineageTag: 0bd264aa-4366-4247-bbdb-76a99b5a657d
+		summarizeBy: sum
+		sourceColumn: stats_summary_incidents
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_summary_effort
+		dataType: int64
+		formatString: 0
+		lineageTag: 9e55ae74-a889-4831-9fa7-8993ce3deea0
+		summarizeBy: sum
+		sourceColumn: stats_summary_effort
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_charts_severity_Mandatory
+		dataType: int64
+		formatString: 0
+		lineageTag: 315e8149-38f7-4c73-be1d-c4ba40e4ff2a
+		summarizeBy: sum
+		sourceColumn: stats_charts_severity_Mandatory
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_charts_severity_Optional
+		dataType: int64
+		formatString: 0
+		lineageTag: b71d9e6e-7530-45ba-b33a-71166a26f6c9
+		summarizeBy: sum
+		sourceColumn: stats_charts_severity_Optional
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_charts_severity_Potential
+		dataType: int64
+		formatString: 0
+		lineageTag: 37140593-deab-4fb1-8c00-bae4e5c9045a
+		summarizeBy: sum
+		sourceColumn: stats_charts_severity_Potential
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_charts_severity_Information
+		dataType: int64
+		formatString: 0
+		lineageTag: ac27d6a5-3527-4f82-bb7f-3cea3993f9fb
+		summarizeBy: sum
+		sourceColumn: stats_charts_severity_Information
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_charts_category_Scale
+		dataType: int64
+		formatString: 0
+		lineageTag: 41d1e76c-a1e4-46c2-a457-099820f5adf1
+		summarizeBy: sum
+		sourceColumn: stats_charts_category_Scale
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'rules_Scale.0001_id'
+		dataType: string
+		lineageTag: 95945915-0e12-4114-b02d-f00da7de99d2
+		summarizeBy: none
+		sourceColumn: rules_Scale.0001_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'rules_Scale.0001_description'
+		dataType: string
+		lineageTag: 76be4d57-dc46-4701-9ad8-aad3dac10490
+		summarizeBy: none
+		sourceColumn: rules_Scale.0001_description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'rules_Scale.0001_label'
+		dataType: string
+		lineageTag: 10e83105-c674-463a-a211-dccf2892030c
+		summarizeBy: none
+		sourceColumn: rules_Scale.0001_label
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'rules_Scale.0001_severity'
+		dataType: string
+		lineageTag: 9ec2d757-671b-4705-907e-9c541a8309a3
+		summarizeBy: none
+		sourceColumn: rules_Scale.0001_severity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'rules_Scale.0001_effort'
+		dataType: string
+		lineageTag: 5ba766c3-6513-4ee8-b4e8-dda2b2c42e6c
+		summarizeBy: none
+		sourceColumn: rules_Scale.0001_effort
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'rules_Scale.0001_links'
+		dataType: string
+		lineageTag: 537d3b1c-e20b-4d7c-b4db-e6482520d8bc
+		summarizeBy: none
+		sourceColumn: rules_Scale.0001_links
 
 		annotation SummarizationSetBy = Automatic
 
@@ -168,9 +323,10 @@ table 'dotnet modernisation'
 				  #"Invoke custom function" = Table.AddColumn(#"Filtered hidden files 1", "Transform file", each #"Transform file"([Content])),
 				 // #"Removed other columns" = Table.SelectColumns(#"Invoke custom function", {"Content"}),
 				  #"Expanded table column" = Table.ExpandTableColumn(#"Invoke custom function" , "Transform file", Table.ColumnNames(#"Transform file"(#"Sample file"))),
-				  #"Removed columns 1" = Table.RemoveColumns(#"Expanded table column", {"Content"})
+				  #"Removed columns 1" = Table.RemoveColumns(#"Expanded table column", {"Content"}),
+				  #"Changed column type 2" = Table.TransformColumnTypes(#"Removed columns 1", {{"settings_components_code", type logical}, {"settings_components_binaries", type logical}, {"stats_summary_projects", Int64.Type}, {"stats_summary_issues", Int64.Type}, {"stats_summary_incidents", Int64.Type}, {"stats_summary_effort", Int64.Type}, {"stats_charts_severity_Mandatory", Int64.Type}, {"stats_charts_severity_Optional", Int64.Type}, {"stats_charts_severity_Potential", Int64.Type}, {"stats_charts_severity_Information", Int64.Type}, {"stats_charts_category_Scale", Int64.Type}})
 				in
-				  #"Removed columns 1"
+				  #"Changed column type 2"
 
 	annotation PBI_ResultType = Table
 

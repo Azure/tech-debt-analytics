@@ -1,0 +1,392 @@
+table 'Latest dotnet modernisation results'
+	lineageTag: cf8a4b2c-6191-4ee5-82d1-ba821db63f1a
+
+	column Org
+		dataType: string
+		lineageTag: 6bc37de0-0175-40fa-995a-c262dd066edc
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[Org]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Repo
+		dataType: string
+		lineageTag: 50cb17ef-1f9f-4bc5-8134-d0ad1819689f
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[Repo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Branch
+		dataType: string
+		lineageTag: 99e5757c-1f70-4eed-8c30-e90c8639e036
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[Branch]
+
+		annotation SummarizationSetBy = Automatic
+
+	column PR
+		dataType: string
+		lineageTag: bb6c2dd1-b700-4910-9ac3-10a45cc8ac4e
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[PR]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Commit
+		dataType: string
+		lineageTag: 8cd579b4-af74-4fe8-b9d5-685947d5c104
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[Commit]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Committer
+		dataType: string
+		lineageTag: 134d1a2a-5fd0-4cde-931e-21dda69fd233
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[Committer]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Assessment Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 65ebef73-2d83-4ed9-baf3-6d6a77963694
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[Assessment Date]
+
+		variation Variation
+			isDefault
+			relationship: 09ceb447-2fbf-4f89-9ac0-678216b9ed6d
+			defaultHierarchy: LocalDateTable_cdcabd17-b0ee-45dc-94bd-ff855296c4b5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Assessment Time'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ce0fd97b-747d-4d4e-a9a4-e9de9f4b149f
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[Assessment Time]
+
+		variation Variation
+			isDefault
+			relationship: 256710a6-a147-4260-ad4d-1c36ca326f16
+			defaultHierarchy: LocalDateTable_7f94d400-0be3-4911-ac7d-245b022afea9.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Extension
+		dataType: string
+		lineageTag: 32117c5b-b45f-4552-8a79-9834e3e690df
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[Extension]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Folder Path'
+		dataType: string
+		lineageTag: b55b02f4-7595-44e4-bbf0-72edb252dfe6
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[Folder Path]
+
+		annotation SummarizationSetBy = Automatic
+
+	column analysisStartTime
+		dataType: string
+		lineageTag: ba4f2b8d-bd80-4caf-87f6-86574458c506
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[analysisStartTime]
+
+		annotation SummarizationSetBy = Automatic
+
+	column analysisEndTime
+		dataType: string
+		lineageTag: fb19122e-f4a3-4908-9fc3-1a1b685d8150
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[analysisEndTime]
+
+		annotation SummarizationSetBy = Automatic
+
+	column projects
+		dataType: string
+		lineageTag: 025f70c1-baaf-4c26-85ce-665ea31b177e
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[projects]
+
+		annotation SummarizationSetBy = Automatic
+
+	column settings_components_code
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ef4d17e4-e5c1-42ef-9ab5-d11788aa2434
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[settings_components_code]
+
+		annotation SummarizationSetBy = Automatic
+
+	column settings_components_binaries
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2bd8501b-fdd8-4059-b534-01216797c527
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[settings_components_binaries]
+
+		annotation SummarizationSetBy = Automatic
+
+	column settings_targetId
+		dataType: string
+		lineageTag: 77266c6a-6012-4ae7-948a-5ab421f084e5
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[settings_targetId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column settings_targetDisplayName
+		dataType: string
+		lineageTag: 28a37a6d-f1b5-42a2-a332-e1bd213a989f
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[settings_targetDisplayName]
+
+		annotation SummarizationSetBy = Automatic
+
+	column settings_visuals_elements
+		dataType: string
+		lineageTag: 9a33fbb9-3954-4aac-b4c8-ef6d4bfe5f42
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[settings_visuals_elements]
+
+		annotation SummarizationSetBy = Automatic
+
+	column settings_visuals_pages_projects
+		dataType: string
+		lineageTag: cf00ef3e-16a6-4f35-858e-87f22f17e236
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[settings_visuals_pages_projects]
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_summary_projects
+		dataType: int64
+		formatString: 0
+		lineageTag: c77fb51d-385c-4795-8689-45e3d4060bd8
+		summarizeBy: sum
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[stats_summary_projects]
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_summary_issues
+		dataType: int64
+		formatString: 0
+		lineageTag: bb9249f1-c728-40e6-8b2c-6e04f6c2f46f
+		summarizeBy: sum
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[stats_summary_issues]
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_summary_incidents
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ad7d2d4-533d-49aa-b6b0-209cd1e57b1d
+		summarizeBy: sum
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[stats_summary_incidents]
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_summary_effort
+		dataType: int64
+		formatString: 0
+		lineageTag: 77e1edbb-8704-473e-b4ee-0a356cb02c15
+		summarizeBy: sum
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[stats_summary_effort]
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_charts_severity_Mandatory
+		dataType: int64
+		formatString: 0
+		lineageTag: 273a9fd2-cf41-48f6-b9e8-9b1bab50f9cc
+		summarizeBy: sum
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[stats_charts_severity_Mandatory]
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_charts_severity_Optional
+		dataType: int64
+		formatString: 0
+		lineageTag: 68995668-1a00-4916-a105-ebab4ca64155
+		summarizeBy: sum
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[stats_charts_severity_Optional]
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_charts_severity_Potential
+		dataType: int64
+		formatString: 0
+		lineageTag: 1d1d8ed0-828f-4213-a3e6-94d6881b2a12
+		summarizeBy: sum
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[stats_charts_severity_Potential]
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_charts_severity_Information
+		dataType: int64
+		formatString: 0
+		lineageTag: 034a9225-4c18-4f52-b22f-f62bd0bc3888
+		summarizeBy: sum
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[stats_charts_severity_Information]
+
+		annotation SummarizationSetBy = Automatic
+
+	column stats_charts_category_Scale
+		dataType: int64
+		formatString: 0
+		lineageTag: 6dcca8c5-ae0e-4de8-bfea-70497fd3f78b
+		summarizeBy: sum
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[stats_charts_category_Scale]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'rules_Scale.0001_id'
+		dataType: string
+		lineageTag: f58ce5cf-fef1-469a-9403-f4c08deeef53
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[rules_Scale.0001_id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'rules_Scale.0001_description'
+		dataType: string
+		lineageTag: 4a9dc691-dc17-4d4f-b2ac-74e016d2b962
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[rules_Scale.0001_description]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'rules_Scale.0001_label'
+		dataType: string
+		lineageTag: 16929422-0cc3-49e2-a336-01e337a2a9d6
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[rules_Scale.0001_label]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'rules_Scale.0001_severity'
+		dataType: string
+		lineageTag: 5c9f9f08-5f2b-45ed-a83d-79752a77b4f2
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[rules_Scale.0001_severity]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'rules_Scale.0001_effort'
+		dataType: string
+		lineageTag: f09f805a-0079-47de-9f4a-d25bc8f9172b
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[rules_Scale.0001_effort]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'rules_Scale.0001_links'
+		dataType: string
+		lineageTag: 0e17f1a0-2245-4988-887f-9d1b57073024
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: dotnet modernisation[rules_Scale.0001_links]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Latest dotnet modernisation results' = calculated
+		mode: import
+		source = ```
+				
+				VAR MaxDates = 
+				    SUMMARIZE(
+				        'dotnet modernisation', 
+				        'dotnet modernisation'[Org], 
+				        'dotnet modernisation'[Repo], 
+				        "MaxDate", MAX('dotnet modernisation'[analysisEndTime])
+				    )
+				VAR _ARRAY = 
+				    SELECTCOLUMNS(
+				        MaxDates,
+				        "MaxDate", [MaxDate]
+				    )
+				
+				RETURN
+				    FILTER(
+				        'dotnet modernisation', 
+				        CONTAINSROW(_ARRAY, 'dotnet modernisation'[analysisEndTime])
+				    )
+				```
+
+	annotation PBI_Id = a9eaca0c63ce4c0e9ee872a43e41897b
+

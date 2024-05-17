@@ -3,3 +3,13 @@ relationship 0702c12c-1728-4389-b8b3-5998a1473075
 	fromColumn: 'dotnet modernisation'.'Assessment Date'
 	toColumn: LocalDateTable_3dbf6775-7619-41e9-9ef7-87efd2cc93c1.Date
 
+relationship 09ceb447-2fbf-4f89-9ac0-678216b9ed6d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Latest dotnet modernisation results'.'Assessment Date'
+	toColumn: LocalDateTable_cdcabd17-b0ee-45dc-94bd-ff855296c4b5.Date
+
+relationship 256710a6-a147-4260-ad4d-1c36ca326f16
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Latest dotnet modernisation results'.'Assessment Time'
+	toColumn: LocalDateTable_7f94d400-0be3-4911-ac7d-245b022afea9.Date
+
