@@ -89,3 +89,27 @@ appcat analyze $appPath --source folder --report $destination --serializer json 
 
 [Docs](https://learn.microsoft.com/en-us/azure/migrate/appcat/java)
 [CLI reference](https://azure.github.io/appcat-docs/cli/)
+
+## Java and dotnet shared estimation methodology
+
+Source: [Appcat story points](https://azure.github.io/appcat-docs/cli/#about-story-points_cli-guide:~:text=Zipkin-,A.3.%20About%20rule%20story%20points,-A.3.1.%20What)
+
+> ### A.3.2. How story points are estimated in rules
+> Estimating the level of effort for the story points for a rule can be tricky. The following are the general guidelines APPCAT uses when estimating the level of effort required for a rule.
+> 
+> | Level of Effort | Story Points | Description |
+> |-----------------|--------------|-------------|
+> | Information | 0 | An informational warning with very low or no priority for migration. |
+> | Trivial | 1 | The migration is a trivial change or a simple library swap with no or minimal API changes. |
+> | Complex | 3 | The changes required for the migration task are complex, but have a documented solution. |
+> | Redesign | 5 | The migration task requires a redesign or a complete library change, with significant API changes. |
+> | Rearchitecture | 7 | The migration requires a complete rearchitecture of the component or subsystem. |
+> | Unknown | 13 | The migration solution is not known and may need a complete rewrite. |
+> 
+> ### A.3.3. Task category
+> In addition to the level of effort, you can categorize migration tasks to indicate the severity of the task. The following categories are used to group issues to help prioritize the migration effort.
+> 
+> - Mandatory: The task must be completed for a successful migration. If the changes are not made, the resulting application will not build or run successfully. Examples include replacement of proprietary APIs that are not supported in the target platform.
+> - Optional: If the migration task is not completed, the application should work, but the results may not be optimal. If the change is not made at the time of migration, it is recommended to put it on the schedule soon after your migration is completed. An example of this would be the upgrade of EJB 2.x code to EJB 3.
+> - Potential: The task should be examined during the migration process, but there is not enough detailed information to determine if the task is mandatory for the migration to succeed. An example of this would be migrating a third-party proprietary type where there is no directly compatible type.
+> - Information: The task is included to inform you of the existence of certain files. These may need to be examined or modified as part of the modernization effort, but changes are typically not required. An example of this would be the presence of a logging dependency or a Maven pom.xml.
